@@ -59,7 +59,8 @@ echo -------------------------------------------------------------
 echo 批处理执行完毕！
 echo;
 :menu
-set /p var=如果出现错误,请输入y执行git pull origin master
+echo 如果出现错误,请输入y执行git pull origin master
+set /p var=
 echo;
 if "%var%"=="y" goto pull
 goto end

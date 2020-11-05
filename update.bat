@@ -60,18 +60,22 @@ echo 批处理执行完毕！
 echo;
 :menu
 echo 如果出现错误,可输入y执行git pull origin master
-set /p var=
 echo;
+set /p var=
 if "%var%"=="y" goto pull
 goto end
 :pull
 echo -----------------[git pull origin master]--------------------
 git pull origin master
 echo -------------------------------------------------------------
-pause
+echo 下一步执行git push origin master ,输入n退出
+echo;
+set /p var=
+if "%var%"=="n" goto end
+
 echo -----------------[git push origin master]----------------------
 git push origin master
 echo -------------------------------------------------------------
 echo 批处理执行完毕！
-:end
 pause
+:end

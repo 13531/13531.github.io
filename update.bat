@@ -57,6 +57,15 @@ echo -----------------------[git message]-------------------------
 git push origin master
 echo -------------------------------------------------------------
 echo 批处理执行完毕！
-
-
-pause
+:menu
+set /p var=如果出现错误,请输入y执行git pull origin master
+if "%var%"=="y" goto pull
+goto end
+:pull
+echo -------------------[pull origin master]----------------------
+git pull origin master
+echo -------------------[push origin master]----------------------
+git push origin master
+echo -------------------------------------------------------------
+echo 批处理执行完毕！
+:end

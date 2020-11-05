@@ -1,5 +1,9 @@
 @echo off
 title GIT快速提交工具
+
+:: 当前git的版本
+git --version
+echo.
 echo 当前目录：%cd%
 goto start
 :seturl
@@ -11,12 +15,12 @@ set /p url=
 ::git remote -v
 ::echo -------------------------------------------------------------
 ::删除关联对应的远程仓库地址
-::git remote rm origin 
+git remote rm origin 
 ::查看是否删除成功，如果没有任何返回结果，表示OK
 ::git remote -v 
 ::重新关联git远程仓库地址  例如https://github.com/13531/test-git
-::git remote add origin %url%
-git remote set-url origin %url%
+git remote add origin %url%
+
 :start
 echo -------------------------------------------------------------
 echo 当前git对应的远程仓库地址:
@@ -34,8 +38,6 @@ if %errorlevel%==3   goto end
 
 echo 开始提交代码到本地仓库
 
-:: 当前git的版本
-git --version
 echo -------------------------------------------------------------
 ::开始添加变更
 git add -A .

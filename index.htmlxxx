@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+<body>
+<h1>Hello World</h1>
+<p>I'm hosted with GitHub Pages.有意思!</p>
+<script  type='module'>
+import _ from "./src/ap/ap.js";
+
+_.get('./post/post-list.js?t=a'+Math.random(),function(e){
+console.log(e);
+var jn=JSON.parse(e);
+
+for(var i of jn){
+_('<div class="post-link" >111<div>').attr({"data-url":i}).html(i).ap(_('body'),'<]>');
+}
+
+});
+_('body').on('click',{class:"post-link"},function(e){
+	var t=_(e.target);
+	console.log(t.attr('data-url'))
+	_.get('./post'+t.attr('data-url')+'?t=a'+Math.random(),function(r){
+		
+		console.log(r)
+	});
+
+
+})
+</script>
+</body>
+</html>

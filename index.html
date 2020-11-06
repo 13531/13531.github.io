@@ -1,7 +1,74 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <link rel="stylesheet" href="/umi.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>my-umi-app</title>
+    <script>window.routerBase = "/";</script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
+    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+<style>
+body{
+background:#eee;
+
+}
+</style>
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.有意思!</p>
+    <div id="root">
+        <div id="content">
+		
+		</div>
+		
+    </div>
+	<div id="show_content"></div>
 </body>
+<script>
+    var rendererMD = new marked.Renderer();
+    marked.setOptions({
+        renderer: rendererMD,
+        highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+        },
+        gfm: true,
+        tables: true,
+        breaks: false,
+        pedantic: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false
+    });
+    var markdownString = '```js\n console.log("hello"); \n```';
+
+    document.getElementById('content').innerHTML = marked(markdownString);
+</script>
+<script  type='module'>
+import _ from "./src/ap/ap.js";
+
+_.get('./post/post-list.js?t=a'+Math.random(),function(e){
+console.log(e);
+var jn=JSON.parse(e);
+var root=_('#root')
+for(var i of jn){
+_('<div class="post-link" >111<div>').attr({"data-url":i}).html(i).ap(root,'<]>');
+}
+
+});
+_('body').on('click',{class:"post-link"},function(e){
+	var t=_(e.target);
+	console.log(t.attr('data-url'))
+	_.get('./post'+t.attr('data-url')+'?t=a'+Math.random(),function(r){
+		
+		_('#show_content').html(marked(r));
+	});
+
+
+})
+</script>
 </html>

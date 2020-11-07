@@ -6,7 +6,7 @@ Set oFso = CreateObject("Scripting.FileSystemObject")
 dim a
 a=""
 dim posts_list
-posts_list="___posts_list.html"
+posts_list="tmp-txt-list.html"
 treeIt(ww)
 set f=ofso.opentextfile(posts_list,2,true)
 f.write a

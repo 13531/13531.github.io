@@ -41,7 +41,7 @@ _('body').on('click',{class:"post-link"},function(e){
 
 
 })
-_.get('./txt/___posts_list.html?t='+Math.random(),function(e){
+_.get('./txt/tmp-txt-list.html?t='+Math.random(),function(e){
 	
 	var arr=e.split('|');
 	var posts=[];

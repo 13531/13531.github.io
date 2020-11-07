@@ -315,16 +315,19 @@ xx.prototype = {
     hide: function (time, fn) {
         var ts = this;
         if (time) {
-            if (fn)
-                fn(this);
+            
 
             var timer = setTimeout(function () {
                 ts.each(function (o) {
+					
                     o.style.display = 'none';
+					if (typeof fn==='function') fn(ts);
                     ts = null;
                     clearTimeout(timer);
                 });
             }, time);
+			
+               
         } else {
             this.each(function (o) {
                 o.style.display = 'none';
@@ -337,6 +340,7 @@ xx.prototype = {
         this.each(function (o) {
             o.style.display = 'block';
         });
+		return this;
     },
     attr: function (d,f) {
         if (typeof d === 'string'&&!f) {
@@ -387,8 +391,8 @@ xx.prototype = {
 		
 	}
 	,addClass:function(a){
-		this.each(function(node){
-			var r=a.trim().split(/\s+/g);
+		this.each(function(node){			
+			var r=a.trim().split(/\s+/g);			
 			var c=node.className.split(/\s+/g);
 			if(node.className.length==0)c=[];
 			for(var j in r){
@@ -479,7 +483,13 @@ xx.prototype = {
     @arg {string}:选择tag ; {json} 例如{id:null} 选择含有id 子节点生效; {id:'abc'} 具体的id生效
     @fn {funtion}
      */
-	,on: function (type, arg, handler) { 
+	 ,on:function(type, arg, handler){
+		 this.each(function(o){
+			 xx(o)._on(type, arg, handler);
+		 });
+		 return this;
+	 }
+	,_on: function (type, arg, handler) { 
 		console.log('events',this.events);
 		if(this.events[type]){
 			throw new Error(type+' 重复绑定. 需解除绑定或使用命名空间避,如'+type+'.name');
@@ -540,6 +550,15 @@ xx.prototype = {
 	}
 	,blur:function(){
 		this.node.blur();
+		return this;
+	}
+	,find:function(d){
+		this.nodes=this.node.querySelectorAll(d);
+		this.node=this.nodes[0];
+		return this;
+	}
+	,parent:function(){
+		this.node=this.node.parentNode;
 		return this;
 	}
 }

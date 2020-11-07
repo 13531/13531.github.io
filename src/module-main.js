@@ -27,7 +27,7 @@ _('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
 });
 	
 
-_.get('./posts/readme.md.txt?t=a'+Math.random(),function(r){
+_.get('./txt/readme.md.txt?t=a'+Math.random(),function(r){
 		
 		_('#show_content').html(marked(r));
 });
@@ -41,7 +41,7 @@ _('body').on('click',{class:"post-link"},function(e){
 
 
 })
-_.get('./posts/___posts_list.html?t='+Math.random(),function(e){
+_.get('./txt/___posts_list.html?t='+Math.random(),function(e){
 	
 	var arr=e.split('|');
 	var posts=[];
@@ -60,7 +60,7 @@ _.get('./posts/___posts_list.html?t='+Math.random(),function(e){
 	for(var i in posts){
 	// console.log(posts[i]);
 	 postTitle=posts[i].url.split('/');
-	 htmlArr.push('<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;" title="'+posts[i]._updatetime+'" class="post-link cc" data-url="./posts'+posts[i].url+'">'+postTitle[postTitle.length-1].replace(/\.txt$/ig,'')+'</a></li>');
+	 htmlArr.push('<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;" title="'+posts[i]._updatetime+'" class="post-link cc" data-url="./txt'+posts[i].url+'">'+postTitle[postTitle.length-1].replace(/\.txt$/ig,'')+'</a></li>');
 	}
 	//console.log(htmlArr)
 	_('#posts_list').html(marked(htmlArr.join('')));

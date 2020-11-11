@@ -73,7 +73,8 @@ _('body').on('click',{class:"post-link"},function(e){
 		
 		var f=t.attr('data-url').split('/');
 	
-		_('#show_content').html(r).find('img').each(function(o){
+		_('#show_content').html(r).find('img,audio,video').each(function(o){
+	
 			var s=o.src.split('/');
 			f[f.length-1]=s[s.length-1];			
 			o.src=f.join('/');

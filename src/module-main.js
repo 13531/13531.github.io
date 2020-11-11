@@ -1,6 +1,36 @@
-import _ from "./ap.js";
+
+
+
+_('.page-hide').removeClass('page-hide');
+var logo=_('.logo').node,timer;
+var count=0;
+var logoAnim=function(node){
 	
-_('body').show();
+	
+	
+	timer=setTimeout(function(){
+		
+		if(node.offsetWidth>130){
+			
+			var w=node.offsetWidth*0.9,
+			h=node.offsetHeight*0.9;
+
+			
+			
+			node.style.width=w+'px';
+			node.style.height=h+'px';
+			logoAnim(node)
+		}else if(node.offsetWidth<=130){
+			count+=50
+		node.style.marginRight=count+'px';
+		if(count<document.body.offsetWidth-0)
+			logoAnim(node)
+			
+		}
+	},10);
+}
+
+
 		//导航
 _('.layui-nav-item').on('mouseenter',function(e){
 	//隐藏子菜单
@@ -28,15 +58,32 @@ _('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
 	
 
 _.get('./txt/readme.md.txt?t=a'+Math.random(),function(r){
-		
+		try{
 		_('#show_content').html(marked(r));
+		}catch(e){
+			_('#show_content').html(r);
+		}
+		logoAnim(logo);
 });
 _('body').on('click',{class:"post-link"},function(e){
 	var t=_(e.target);
 	console.log(t.attr('data-url'))
 	_.get(t.attr('data-url')+'?t=a'+Math.random(),function(r){
 		
+		
+		var f=t.attr('data-url').split('/');
+	
+		_('#show_content').html(r).find('img').each(function(o){
+			var s=o.src.split('/');
+			f[f.length-1]=s[s.length-1];			
+			o.src=f.join('/');
+		});
+		t=null;
+		/*try{
 		_('#show_content').html(marked(r));
+		}catch(e){
+				
+		}*/
 	});
 
 
@@ -60,9 +107,13 @@ _.get('./txt/tmp-txt-list.html?t='+Math.random(),function(e){
 	for(var i in posts){
 	// console.log(posts[i]);
 	 postTitle=posts[i].url.split('/');
-	 htmlArr.push('<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;" title="'+posts[i]._updatetime+'" class="post-link cc" data-url="./txt'+posts[i].url+'">'+postTitle[postTitle.length-1].replace(/\.txt$/ig,'')+'</a></li>');
+	 htmlArr.push('<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;" title="'+posts[i]._updatetime+'" class="post-link cc" data-url="./txt'+posts[i].url+'">'+postTitle[postTitle.length-2].replace(/\.title$/ig,'')+'</a></li>');
 	}
 	//console.log(htmlArr)
+	try{
 	_('#posts_list').html(marked(htmlArr.join('')));
+	}catch(e){
+		_('#posts_list').html(htmlArr.join(''));
+	}
 
 });

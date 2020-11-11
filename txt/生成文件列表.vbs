@@ -1,8 +1,12 @@
+
+
+
 Set ws=WScript.CreateObject("wscript.shell")
 ww=ws.CurrentDirectory
 
 
 Set oFso = CreateObject("Scripting.FileSystemObject")
+msgbox wscript.scriptname
 dim a
 a=""
 dim posts_list
@@ -22,8 +26,8 @@ Set oFolder = oFso.GetFolder(sPath)
 Set oSubFolders = oFolder.Subfolders
 Set oFiles = oFolder.Files
 For Each oFile In oFiles
-rem 获取txt格式信息
-IF StrComp(LCase(oFso.GetExtensionName(oFile)),"txt")=0 Then 
+rem 获取指定格式文件信息. 文件路径 和最后更新时间
+IF StrComp(LCase(oFso.GetExtensionName(oFile)),"html")=0 Then 
 	a=a & Replace(ofile.path,ww,"") & "|"
 	Set objFile=oFso.GetFile(ofile.path)
 	a=a & objFile.DateLastModified & "|"

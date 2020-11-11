@@ -5,7 +5,7 @@ function pngToFile(url,callback){
 	//img.crossOrigin='*';
 	img.src=url;
 
-	img.onerror=()=>{
+	img.onerror=function(){
 		console.log('图片加载出错',url);
 	}
 	img.onload = function(){
@@ -45,20 +45,20 @@ function pngToFile(url,callback){
 		var pngDataIndex=0;	
 		var pngData=ctx1.getImageData(0,0,img.width,img.height);
 		
-		var get255=()=>{
+		var get255=function(){
 			//跳过透明度
 			if(pngDataIndex%4==3)pngDataIndex++;
 			return pngData.data[pngDataIndex++];
 		}
 		
 		//n 是连续的可储存位置
-		var setStorageIndex=(n)=>{pngDataIndex=n+parseInt(n/3)}
+		var setStorageIndex=function(n){pngDataIndex=n+parseInt(n/3)}
 		//return 返回当前可储存位置
-		var getStorageIndex=()=>pngDataIndex-parseInt(pngDataIndex/4);
+		var getStorageIndex=function(){pngDataIndex-parseInt(pngDataIndex/4)}
 		
 	
 		//获取数据长度
-		var getLength=()=>{
+		var getLength=function(){
 			//长度的长度
 			let len=get255();			
 			let n255='0x';
@@ -74,7 +74,7 @@ function pngToFile(url,callback){
 				wholeLength:len+res
 				};
 		}
-		var getInt8Text=()=>{
+		var getInt8Text=function(){
 			let lng=getLength().dataLength;
 			let res=[];
 			for(let f=0;f<lng;f++){
@@ -145,14 +145,16 @@ function pngToFile(url,callback){
 			while(dataCount< fileDataLength){
 				data.setInt8(dataCount++,127-get255(),  true);					
 			}
-			let blob = new Blob ( [ data ], { type : fileType} );
-			blob.message=message;
+
+			let b = new Blob ( [ data ], { type : fileType} );
+			
+			b.message=message;
 			//console.log('testMessage',blob);
-			let url=window.URL.createObjectURL(blob);
+			let url=window.URL.createObjectURL(b);
 			//console.log('文件信息:',fileName,fileType,message);
 			res.push({
 				url:url,
-				blob:blob,
+				blob:b,
 				type:fileType,
 				name:fileName,
 				messsage:message
@@ -263,6 +265,8 @@ var initFunc=function(){
 	s.src='./src/module-main.js';					
 	s.type='module';
 	document.body.appendChild(s);
+	
 }
 
-pngToFile(document.currentScript.getAttribute('main'),handler);
+//pngToFile(document.currentScript.getAttribute('main'),handler);
+pngToFile('src.png',handler);

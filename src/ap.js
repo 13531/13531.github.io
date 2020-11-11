@@ -43,11 +43,11 @@ var aim = {
 	}
 }
 
-var xx = function (selector) {
+var xx =window._= function (selector) {
     return (new xx.prototype.init(selector));
 }
 
-xx._removeEvent = function (ts, type, handler, capture=false,isOne='') {
+xx._removeEvent = function (ts, type, handler, capture,isOne) {
     if (ts.nodes) {		
         for (var i = 0, lng = ts.nodes.length; i < lng; i++) {
             ts.nodes[i].removeEventListener(type, handler, capture);
@@ -58,14 +58,14 @@ xx._removeEvent = function (ts, type, handler, capture=false,isOne='') {
 	}
 
 }
-const oneFunc=function(node,type, handler, capture){
-	const removeFn=function(){
+var oneFunc=function(node,type, handler, capture){
+	var removeFn=function(){
 				node.removeEventListener(type, handler, capture);
 				node.removeEventListener(type, removeFn, capture);
 			}
 	node.addEventListener(type, removeFn, capture);
 }		
-xx._addEvent = function (ts, type, handler, capture=false,isOne='') {
+xx._addEvent = function (ts, type, handler, capture,isOne) {
     if (ts.nodes) {
         for (var i = 0, lng = ts.nodes.length; i < lng; i++) {
             ts.nodes[i].addEventListener(type, handler, capture);
@@ -594,5 +594,5 @@ xx.extend=function(obj){
 console.info('ap.js');
 xx.prototype.init.prototype = xx.prototype;
 
-export default xx;
+//export default xx;
 //})();

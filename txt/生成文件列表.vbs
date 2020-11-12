@@ -8,11 +8,13 @@ ww=ws.CurrentDirectory
 Set oFso = CreateObject("Scripting.FileSystemObject")
 
 dim a
-a=""
+a="var txt_list='"
 dim posts_list
-posts_list="tmp-txt-list.html"
+posts_list="txt-list.js"
 treeIt(ww)
 set f=ofso.opentextfile(posts_list,2,true)
+a=a & "';"
+a=RP(a)
 f.write a
 f.close
 
@@ -42,3 +44,21 @@ For Each oSubFolder In oSubFolders
 TreeIt(oSubFolder.Path)
 Next
 End Function 
+
+Function RP(strSrc) 'Function 表示这是一个函数
+ 
+ Dim objReg   '定义一个正则变量
+ 
+ Set objReg = New RegExp '给正则变量赋值
+ 
+ With objReg  '引用正则变量
+ 
+  .Global = True '全局匹配
+ 
+  .Pattern = "\\" '正则模式
+ 
+  RP = .Replace(strSrc, "/") '替换
+ 
+ End With
+ 
+End Function '函数体结束

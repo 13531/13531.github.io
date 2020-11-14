@@ -63,6 +63,7 @@ _('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
 	
 function loadPid(pid){
 	_.get( './txt/pid/'+pid+'.pid?t='+Math.random(),function(r){
+		console.log(r);
 	loadContent('./'+r.getElementsByTagName('url')[0].innerHTML);
 });
 	

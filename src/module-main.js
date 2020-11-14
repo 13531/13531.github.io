@@ -59,7 +59,7 @@ _('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
 function loadContent(url){
 	if(/^file:\/\//.test(location.href)){
 		_('.wrap').show();
-		_('#iframe').attr('src',url);
+		_('#iframe').attr('src',url).show();
 		return
 	}
 	
@@ -74,9 +74,10 @@ function loadContent(url){
 			var s=o.src.split('/');
 			f[f.length-1]=s[s.length-1];			
 			o.src=f.join('/');
+			
 		});
 		t=null;
-		
+		location.href=location.href.replace(/#.*?$/,'')+'#'+url;		
 
 	}
 	);
@@ -129,11 +130,11 @@ console.log(arr)
 		 console.log(posts[i].url)
 		 var tit=postTitle[postTitle.length-2].replace(/\.title$/ig,'')
 		 htmlArr.push('<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;" title="'+posts[i]._updatetime+'" class="post-link cc" data-url="./txt'+posts[i].url+'">'+tit+'</a></li>');
-		 if(/\.top$/.test(tit)){
+		 /*if(/\.top$/.test(tit)){
 			
 				loadContent('./txt'+posts[i].url);
 		
-		 }
+		 }*/
 		
 	}
 	//console.log(htmlArr)

@@ -3,18 +3,18 @@
 
 <head>
 	
-    <link rel="stylesheet" href="./_src/umi.css">
-	<link rel="stylesheet" href="./_src/layui.css">	
+    <!--link rel="stylesheet" href="./_src/umi.css"-->
+	<!--link rel="stylesheet" href="./_src/layui.css"-->	
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>my-umi-app</title>
 	<meta http-equiv="Pragma" content="no-cache">
     <!--script>window.routerBase = "/";</script-->    
 		 <link href="./src/monokai_sublime.min.css" rel="stylesheet">
-    <script src="./_src/marked.min.js"></script> 
+    <!--script src="./_src/marked.min.js"></script--> 
 	<script src="./txt/txt-list.js"></script> 
-    <script src="./_src/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <!--script src="./_src/highlight.min.js"></script-->
+    <!--script>hljs.initHighlightingOnLoad();</script-->
 
 <style>
 html{
@@ -32,10 +32,29 @@ background-color: #ccc;
 
 float: left; 
 width: 200px;
-background-color:#000;
+/*background-color:#000;*/
  } 
+xmp,pre{
+ white-space:pre-wrap;
+ white-space:-moz-pre-wrap;
+ white-space:-pre-wrap;
+ white-space:-o-pre-wrap;
+ word-wrap:break-word;
+}
+xmp{
+border:1px solid gray;
+border-left:15px solid gray;
+padding:6px;
+margin:10px 0px;
+}
 .content { 
+/*
+white-space:normal;
+word-wrap:break-word;*/
+
+color:blue;
 text-align:left;
+padding:20px;
 margin-left: 200px;
 /*==等于左边栏宽度==*/ 
 }
@@ -82,9 +101,9 @@ height:auto;
 
 <body>
 
-<div class="center" >
+<!--div class="center" >
 <img class="logo" src="logo.svg" />
-</div>
+</div-->
 <div class="page-hide">
 <ul style="display:none" class="layui-nav" lay-filter="">
   <li class="layui-nav-item"><a href="">测试菜单</a></li>
@@ -100,15 +119,12 @@ height:auto;
   </li>
   <li class="layui-nav-item"><a href="">社区</a></li>
 </ul>
- <div class="c_bg_blue_p" id="root">
-	<div id="content">		
-	</div>		
-</div>	
+	
 
 	<div ></div>
 	<div class="box">
 	<div class="left c_left_panel layui-bg-black c_over_auto" >
-	<ul id="posts_list" class="layui-nav layui-nav-tree">
+	<ul id="posts_list" class1="layui-nav layui-nav-tree">
 	
 	</ul>
 	</div>
@@ -117,7 +133,7 @@ height:auto;
 	<b>本地预览 :仅用于查看内容是否显示,不是上传后的效果.</b>
         <div class="iframe-container">
 		
-            <iframe style="word-wrap:break-word"  height=498 width=510  id="iframe" frameborder=0 allowfullscreen></iframe>
+            <iframe style="display:none;word-wrap:break-word"  height=498 width=510  id="iframe" frameborder=0 allowfullscreen></iframe>
         </div>
     </div>
 
@@ -126,6 +142,5 @@ height:auto;
 
 </body>
 <script  src="src/ap.js"></script>	
-
 <script src="src/module-main.js"></script>	
 </html>

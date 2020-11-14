@@ -557,6 +557,11 @@ xx.prototype = {
 		this.node=this.nodes[0];
 		return this;
 	}
+	,qAll:function(d){
+		this.nodes=this.node.querySelectorAll(d);
+		this.node=this.nodes[0];
+		return this;
+	}
 	,parent:function(){
 		this.node=this.node.parentNode;
 		return this;

@@ -62,7 +62,7 @@ _('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
 });
 	
 function loadPid(pid){
-	_.get( './txt/pid/'+pid+'.pid?t='+Math.random(),function(r){
+	_.get( './articles/pid/'+pid+'.pid?t='+Math.random(),function(r){
 		
 		         var    parser = new DOMParser();
             var xmlDoc = parser.parseFromString(r, "text/xml");
@@ -78,8 +78,7 @@ function loadContent(url){
 		return
 	}
 	
-		_.get( url+'?t=a'+Math.random(),function(r){
-				
+		_.get( url+'?t=a'+Math.random(),function(r){				
 		//loadContent(t.attr('data-url'),r);	
 		var f=url.split('/');
 	
@@ -92,7 +91,7 @@ function loadContent(url){
 			
 		});
 		t=null;
-		//location.href=location.href.replace(/\?pid.*?$/,'')+'#'+url;		
+		//location.href=location.href.replace(/\?pid.*?$/,'');		
 
 	}
 	);
@@ -111,11 +110,11 @@ _.get('./txt/readme.md.txt?t=a'+Math.random(),function(r){
 _('body').on('click',{class:"post-link"},function(e){
 	var t=_(e.target);
 
-	var url=t.attr('data-url');
-	console.log(url);
+	var pid=t.attr('data-pid');
+	
 	//_('#iframe').attr('src',url);
-
-	loadContent(url);
+	
+	loadPid(pid);
 
 
 })
@@ -124,11 +123,11 @@ function showList(e){
 	var arr=e.split('|');
 console.log(arr)
 	var posts=[];
-	for(var i=0,lng=arr.length-1;i<lng;i+=2){
-		var t=arr[i+1];
+	for(var i=0,lng=arr.length-1;i<lng;i+=3){
+		var t=arr[i+2];
 		t=t.match(/\d+/g).join('');
 		console.log(arr[i]);
-		posts.push({url:arr[i].replace(/\\/g,'/'),updatetime:+t,_updatetime:arr[i+1]})	
+		posts.push({url:arr[i].replace(/\\/g,'/'),pid:arr[i+1],updatetime:+t,_updatetime:arr[i+2]})	
 	}
 	function compare(p){
 		return function(m,n){  
@@ -144,7 +143,7 @@ console.log(arr)
 		 //if( postTitle.length===1)continue;
 		 console.log(posts[i].url)
 		 var tit=postTitle[postTitle.length-2].replace(/\.title$/ig,'')
-		 htmlArr.push('<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;" title="'+posts[i]._updatetime+'" class="post-link cc" data-url="./txt'+posts[i].url+'">'+tit+'</a></li>');
+		 htmlArr.push('<li class="layui-nav-item layui-nav-itemed"><a href="./?p='+posts[i].pid+'" title="'+posts[i]._updatetime+'" class="post-link cc" data-pid="'+posts[i].pid+'" data-url="./'+posts[i].url+'">'+tit+'</a></li>');
 		 /*if(/\.top$/.test(tit)){
 			
 				loadContent('./txt'+posts[i].url);
@@ -160,7 +159,7 @@ console.log(arr)
 	}
 
 }
-showList(txt_list);
+showList(articles_list);
 
 
 				 

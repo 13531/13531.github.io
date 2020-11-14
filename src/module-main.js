@@ -63,8 +63,11 @@ _('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
 	
 function loadPid(pid){
 	_.get( './txt/pid/'+pid+'.pid?t='+Math.random(),function(r){
-		console.log(r);
-	loadContent('./'+r.getElementsByTagName('url')[0].innerHTML);
+		
+		         var    parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(r, "text/xml");
+			console.log(xmlDoc);
+	loadContent('./'+xmlDoc.getElementsByTagName('url')[0].innerHTML);
 });
 	
 }

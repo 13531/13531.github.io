@@ -167,8 +167,8 @@ xx.ajax=function(option){
                  //接收返回的数据类型
                  var type = xhr.getResponseHeader('Content-Type');
 				if(type===null){
-					console.log(typeof xhr.responseXML)
-					  option.callback(xhr.responseXML);				  
+					//console.log(typeof xhr.responseXML)
+					  option.callback(xhr.responseText);				  
 				}  //json格式
 				 else   if(type.indexOf('json')!=-1){	
 			// console.log(JSON.parse(xhr.responseText))
@@ -229,8 +229,7 @@ xx.prototype = {
 	eventCount:0,
 	events:{},
     init: function (f) {
-		this.eventNamespace=new Map;
-		this.eventNamespace.set('test_init',1);
+
         this.selector = f;
 		this.events={};
 		//this.off=function(){};

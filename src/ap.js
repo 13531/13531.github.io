@@ -166,7 +166,8 @@ xx.ajax=function(option){
 				 
                  //接收返回的数据类型
                  var type = xhr.getResponseHeader('Content-Type');
-				if(type===null){			
+				if(type===null){
+					console.log(typeof xhr.responseXML)
 					  option.callback(xhr.responseXML);				  
 				}  //json格式
 				 else   if(type.indexOf('json')!=-1){	

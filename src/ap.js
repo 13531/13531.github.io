@@ -147,7 +147,9 @@ xx.ajax=function(option){
        //如果是get并且有数据
        if(option.type=='get'&&option.data){
             option.url=option.url+'?'+params(option.data);
+		
        }
+	
        //设置请求行
        xhr.open(option.type,option.url);
        //设置请求头(post有数据发送才需要设置请求头)
@@ -159,12 +161,15 @@ xx.ajax=function(option){
 	   
        //注册回调函数
        xhr.onreadystatechange = function(){
+		   
              if(xhr.readyState==4&&xhr.status==200){
 				 
                  //接收返回的数据类型
                  var type = xhr.getResponseHeader('Content-Type');
-                 //json格式
-                 if(type.indexOf('json')!=-1){	
+				if(type===null){			
+					  option.callback(xhr.responseXML);				  
+				}  //json格式
+				 else   if(type.indexOf('json')!=-1){	
 			// console.log(JSON.parse(xhr.responseText))
 					var jn;
 					try{	
@@ -178,7 +183,9 @@ xx.ajax=function(option){
                  }
                  //xml格式
                  else if(type.indexOf('xml')!=-1){
+					
                       option.callback(xhr.responseXML);
+					
                  }
                  //普通格式
                  else{
@@ -490,7 +497,7 @@ xx.prototype = {
 		 return this;
 	 }
 	,_on: function (type, arg, handler) { 
-		console.log('events',this.events);
+		
 		if(this.events[type]){
 			throw new Error(type+' 重复绑定. 需解除绑定或使用命名空间避,如'+type+'.name');
 		}

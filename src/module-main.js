@@ -1,5 +1,10 @@
 
 
+loadPid(_.localGet('p'));
+
+
+
+
 _('.page-hide').removeClass('page-hide');
 var logo=_('.logo').node,timer;
 var count=0;
@@ -30,6 +35,7 @@ var logoAnim=function(node){
 }
 
 
+
 		//导航
 _('.layui-nav-item').on('mouseenter',function(e){
 	//隐藏子菜单
@@ -55,7 +61,12 @@ _('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
 	_(e.target).addClass('mouseenter-nave-child');
 });
 	
-
+function loadPid(pid){
+	_.get( './txt/pid/'+pid+'.pid?t='+Math.random(),function(r){
+	loadContent('./'+r.getElementsByTagName('url')[0].innerHTML);
+});
+	
+}
 function loadContent(url){
 	if(/^file:\/\//.test(location.href)){
 		_('.wrap').show();
@@ -77,7 +88,7 @@ function loadContent(url){
 			
 		});
 		t=null;
-		location.href=location.href.replace(/#.*?$/,'')+'#'+url;		
+		//location.href=location.href.replace(/\?pid.*?$/,'')+'#'+url;		
 
 	}
 	);
@@ -92,7 +103,7 @@ _.get('./txt/readme.md.txt?t=a'+Math.random(),function(r){
 		}
 		logoAnim(logo);
 });*/
-logoAnim(logo);
+//logoAnim(logo);
 _('body').on('click',{class:"post-link"},function(e){
 	var t=_(e.target);
 

@@ -75,9 +75,8 @@ function loadContent(url,_r){
 			
 		});
 		
-		_('#contentCtn').qAll('code').each(function(o){
-			
-			o.innerHTML=hljs.highlightAuto(o.textContent).value;
+		_('#contentCtn').qAll('code').each(function(o){			
+			o.innerHTML=hljs.highlightAuto(o.textContent.trim()).value;
 			hljs.lineNumbersBlock(o);
 		});
 		

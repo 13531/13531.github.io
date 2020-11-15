@@ -1,39 +1,32 @@
-
-
-
 Set ws=WScript.CreateObject("wscript.shell")
-ww=ws.CurrentDirectory
+Set oFso = CreateObject("Scripting.FileSystemObject")
+
+cd=ws.CurrentDirectory
 ws.run "cmd /c if not exist pid md pid >nul" , vbhide
 
 
-Set oFso = CreateObject("Scripting.FileSystemObject")
-
 dim aa
-dim pid_log
 dim max_pid
 dim tmp_pid
 max_pid=0
 aa="var articles_list='"
 articles_list="articles-list.js"
-treeIt(ww)
-treeItCreatePid(ww)
+
+treeIt(cd)
+treeItCreatePid(cd)
 set f=ofso.opentextfile(articles_list,2,true)
 aa=aa & "';"
 aa=RP(aa,"\\","/" )
 f.write aa
 f.close
 
-'Set ws = CreateObject("Wscript.Shell")
-ws.run "cmd /c anit_to_utf8.vbs "& articles_list & " " & articles_list &".utf8&&move /y " & articles_list & ".utf8 "& articles_list &">nul",vbhide
+'转为utf8格式
+ws.run "cmd /c anit_to_utf8.vbs """& articles_list & """ """ & articles_list &".utf8""&&move /y """ & articles_list & ".utf8"" """& articles_list &""">nul",vbhide
 
-' s = MsgBox("是否确定运行", vbOKCancel) 
- 
-'If s = 1 Then  ws.run "cmd /c start cmd",vbhide'确定运行
-'MsgBox max_pid
 
 Function TreeIt(sPath)
 on error resume next
-Set oFso = CreateObject("Scripting.FileSystemObject")
+'Set oFso = CreateObject("Scripting.FileSystemObject")
 Set oFolder = oFso.GetFolder(sPath)
 Set oSubFolders = oFolder.Subfolders
 Set oFiles = oFolder.Files
@@ -48,46 +41,45 @@ TreeIt(oSubFolder.Path)
 Next
 End Function 
 
-
+'遍历文章文件夹创建 唯一数字.pid 文件
 Function TreeItCreatePid(sPath)
 on error resume next
-Set oFso = CreateObject("Scripting.FileSystemObject")
+'Set oFso = CreateObject("Scripting.FileSystemObject")
 Set oFolder = oFso.GetFolder(sPath)
 Set oSubFolders = oFolder.Subfolders
 Set oFiles = oFolder.Files
-For Each oFile In oFiles
-IF StrComp(LCase(oFso.GetExtensionName(oFile)),"html")=0 Then 
 dim ipos
-ipos=InStrRev(ofile.path,"\")
-pathRemove=Left(ofile.path,ipos)
 dim pid
-dim thisPid
-pid=hasPid(pathRemove)
 dim filePath
-	if pid>0 then
-		 filePath=pathRemove & pid & ".pid"
-		thisPid=pid
-	else
+For Each oFile In oFiles
+IF StrComp(LCase(oFso.GetExtensionName(oFile)),"html")=0 Then 	
+	
+	ipos=InStrRev(ofile.path,"\")
+	pathRemove=Left(ofile.path,ipos)	
+	
+	pid=hasPid(pathRemove)	
+	if not pid>0 then
 		max_pid=max_pid+1
-		filePath=pathRemove & max_pid & ".pid"	
-		thisPid=max_pid
+		pid=max_pid
 	end if
-set ff=ofso.opentextfile(filePath,2,true)	
-
-ipos=InStrRev(ww,"\")
-pathRemove=Left(ww,ipos)
-ff.write "<?xml version=""1.0"" encoding=""UTF-8""?><url>"&RP(Replace(ofile.path,pathRemove,""),"\\","/")&"</url>"
-'f.write RP(Replace(ofile.path,pathRemove,""),"\\","/")
-ff.close
-
-	aa=aa & Replace(ofile.path,ww,"") & "|"
-	aa=aa & thisPid & "|"
+	filePath=pathRemove & pid & ".pid"	
+	set ff=ofso.opentextfile(filePath,2,true)	
+	
+	'保留上一级目录
+	ipos=InStrRev(cd,"\")
+	pathRemove=Left(cd,ipos)
 	Set objFile=oFso.GetFile(ofile.path)
+	ff.write "{""createtime"":""" & objFile.DateCreated & """,""updatetime"":""" & objFile.DateLastModified & """,""url"":"""&RP(Replace(ofile.path,pathRemove,""),"\\","/")&"""}"
+	ff.close
+
+	aa=aa & Replace(ofile.path,cd,"") & "|"
+	aa=aa & pid & "|"	
 	aa=aa & objFile.DateLastModified & "|"
 
-
-ws.run "cmd /c anit_to_utf8.vbs " & filePath & " " & filePath & ".utf8&&move /y  "& filePath & ".utf8 " &filePath & "&&copy /y " & filePath & " pid >nul" , vbhide
-	
+	'转为utf8格式json 移动到pid文件夹
+	ws.run "cmd /c anit_to_utf8.vbs """ & filePath & """ """ & filePath & ".json""&&move /y  """& filePath & ".json"" " & " pid>nul" , vbhide
+	'ws.run "cmd /c anit_to_utf8.vbs " & filePath & " " & filePath & ".json&&move /y  "& filePath & ".json " &filePath & "&&copy /y " & filePath & " pid>nul" , vbhide
+		
 end if	
 Next
 For Each oSubFolder In oSubFolders
@@ -96,21 +88,22 @@ Next
 End Function 
 
 
-
+'判断路径下是否存在 .pid后缀文件, 返回该pid值
 Function hasPid(spath)
 on error resume next
-Set oFso = CreateObject("Scripting.FileSystemObject")
+'Set oFso = CreateObject("Scripting.FileSystemObject")
 Set oFolder = oFso.GetFolder(sPath)
-Set oSubFolders = oFolder.Subfolders
+'Set oSubFolders = oFolder.Subfolders
 Set oFiles = oFolder.Files
 For Each oFile In oFiles
 IF StrComp(LCase(oFso.GetExtensionName(oFile)),"pid")=0 Then 
 hasPid=RP(oFso.GetFileName(ofile),"\.pid","" )
+exit for
 end if	
 Next
-For Each oSubFolder In oSubFolders
-hasPid(oSubFolder.Path)
-Next
+'For Each oSubFolder In oSubFolders
+'hasPid(oSubFolder.Path)
+'Next
 End Function 
 
 

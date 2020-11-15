@@ -569,6 +569,27 @@ xx.prototype = {
 		this.node=this.nodes[0];
 		return this;
 	}
+	,q:function(d){
+		this.node=this.node.querySelector(d);		
+		return this;
+	}
+	,next:function(){
+		this.node=this.node.nextSibling();
+		return this;
+	}
+	// {'block':function(o){},none:function(o){}}
+	,changeDisplay(obj){
+		this.each(function(o){	
+		
+			if(typeof obj==='object'){
+				for(var i in obj){
+					obj[i](o);
+				}
+			}
+			o.style.display=o.style.display==='block'?'none':'block';
+		});
+		return this;
+	}
 	,parent:function(){
 		this.node=this.node.parentNode;
 		return this;

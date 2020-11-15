@@ -1,0 +1,13 @@
+<pre><code class="javascript"> 
+Set ws=WScript.CreateObject("wscript.shell")
+Set oFso = CreateObject("Scripting.FileSystemObject")
+
+ww=ws.CurrentDirectory
+ws.run "cmd /c if not exist pid md pid >nul" , vbhide
+
+
+dim aa
+dim max_pid
+dim tmp_pid
+max_pid=0
+</code></pre> 

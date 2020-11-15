@@ -91,13 +91,13 @@ function loadContent(url,_r){
 
 	
 	_.get( url+'?t=a'+Math.random(),function(r){				
-	//loadContent(t.attr('data-url'),r);	
-		var f=url.split('/');
-		//r=hljs.highlightAuto(r).value
-		
-		var title='<h2>'+f[f.length-2].replace(/\.title.*?$/,'')+'</h2>';
-		r=title+marked(r.replace(/<pre>/g, "<pre class='hljs'>"))+ '<hr><small>文档创建: '+_r.createtime+'<br />最后编辑: '+_r.updatetime+'</small>';
-		_('#show_content').html(r).find('img,audio,video,script,link').each(function(o){
+	
+		var f=url.split('/');	
+		var t=f[f.length-2].replace(/\.title.*?$/,'');
+		var title='<h2>'+t+'</h2>';
+		document.title=t;		
+		r=title+marked(r.replace(/<pre>/g, "<pre class='hljs'>"))+ '<hr><small>文档创建: '+fillZero(_r.createtime)+'<br />最后编辑: '+fillZero(_r.updatetime)+'</small>';
+		_('#contentCtn').html(r).qAll('img,audio,video,script,link').each(function(o){
 			//
 			var s=o.src.split('/');
 			f[f.length-1]=s[s.length-1];			
@@ -105,7 +105,7 @@ function loadContent(url,_r){
 			
 		});
 		
-		_('#show_content').find('code').each(function(o){
+		_('#contentCtn').qAll('code').each(function(o){
 			o.innerHTML=hljs.highlightAuto(o.textContent).value			
 		});
 	
@@ -114,17 +114,20 @@ function loadContent(url,_r){
 	});
 		
 }
-
+function fillZero(t){
+	
+	return t.replace(/\d+/g,function(p){			
+			if(p.length==1)return '0'+p;
+			else return p
+		});
+}
 
 function showList(e){	
 	var arr=e.split('|');
 	var posts=[];
 	for(var i=0,lng=arr.length-1;i<lng;i+=3){
 		var t=arr[i+2];
-		t=t.toString().replace(/\d+/g,function(p){			
-			if(p.length==1)return '0'+p;
-			else return p
-		});
+		t=fillZero(t);
 		
 		//console.log(t);
 		posts.push({url:arr[i],pid:arr[i+1],_updatetime:+t.match(/\d+/g).join(''),updatetime:t})	
@@ -199,7 +202,7 @@ function showList(e){
 	if(pid){
 		loadPid(pid);	
 	}else{
-		
+		document.title='welcome!';
 		_('.menu-child-1').show();
 	}
 }

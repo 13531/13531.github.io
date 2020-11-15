@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
-<title>my-umi-app</title>
+<title></title>
 <meta http-equiv="Pragma" content="no-cache">
 
 <link rel="stylesheet" href="./src/md.css">
@@ -23,16 +23,7 @@
 
 
 <style>
-html{
-/*background-color: #ccc; */
-}
-body{
 
-}
-
-#show_content{
-
-}
 *{ margin: 0; padding: 0; } 
 .left { 
 
@@ -54,30 +45,6 @@ padding:6px;
 margin:10px 0px;
 }
 img { height: auto; width: auto\9;width:auto; max-width:100%; }
-.content { 
-/*
-white-space:normal;
-word-wrap:break-word;*/
-
-
-padding:20px;
-/*margin-left: 200px;*/
-/*==等于左边栏宽度==*/ 
-}
-.center{
-/*text-align:center;*/
-
-}
-.page-hide{
-
-}
-.page-show{
-display:bloc!important;
-}
-.logo{
-width:70px;
-height:auto;
-}
 
 /************************/
 .menu-1 div{
@@ -120,55 +87,14 @@ cursor:pointer;
 </head>
 
 <body>
-
 <div id="menu">
 <a target="_blank" href="./"><div class="menu-item">首页</div></a>
 <div id="menuContainer"></div>
 </div>
-
-<!--div class="center" >
-<img class="logo" src="logo.svg" />
-</div-->
-
-<ul style="display:none" class="layui-nav" lay-filter="">
-  <li class="layui-nav-item"><a href="">测试菜单</a></li>
-  <li class="layui-nav-item layui-this"><a href="">菜单二</a></li>
-  <li class="layui-nav-item"><a href="">菜单三</a></li>
-  <li class="layui-nav-item">
-    <a href="javascript:;">二级菜单</a>
-    <dl class="layui-nav-child"> <!-- 二级菜单 -->
-      <dd><a href="">菜单四</a></dd>
-      <dd><a href="">菜单五</a></dd>
-      <dd><a href="">菜单六</a></dd>
-    </dl>
-  </li>
-  <li class="layui-nav-item"><a href="">社区</a></li>
-</ul>
-	
-
-	<div ></div>
-	<div class="box">
-	<div class="left c_left_panel layui-bg-black c_over_auto" >
-	<ul id="posts_list" class1="layui-nav layui-nav-tree">
-	
-	</ul>
-	</div>
-	<div class="content" id="show_content"></div>
-	
+<div class="content" id="contentCtn"></div>	
 <script src="./articles/articles-list.js"></script> 
 <script  src="./src/ap.js"></script>	
 <script src="./src/main.js"></script>	
-	
-<!--div style="display:none" class="wrap">
-	<b>本地预览 :仅用于查看内容是否显示,不是上传后的效果.</b>
-        <div class="iframe-container">		
-            <iframe style="display:none;word-wrap:break-word"  height=498 width=510  id="iframe" frameborder=0 allowfullscreen></iframe>
-        </div>
-    </div-->
-
-	</div>
-
-
 </body>
 
 </html>

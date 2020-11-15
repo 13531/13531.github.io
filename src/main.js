@@ -23,6 +23,7 @@ marked.setOptions({
 	
 	// 默认：false，使用更为时髦的标点，比如在引用语法中加入破折号。
   smartypants: false
+  
 });
 
 
@@ -32,15 +33,10 @@ _('.page-hide').removeClass('page-hide');
 var logo=_('.logo').node,timer;
 var count=0;
 var logoAnim=function(node){	
-	timer=setTimeout(function(){
-		
-		if(node.offsetWidth>130){
-			
+	timer=setTimeout(function(){		
+		if(node.offsetWidth>130){			
 			var w=node.offsetWidth*0.9,
-			h=node.offsetHeight*0.9;
-
-			
-			
+			h=node.offsetHeight*0.9;			
 			node.style.width=w+'px';
 			node.style.height=h+'px';
 			logoAnim(node)
@@ -55,32 +51,6 @@ var logoAnim=function(node){
 }
 
 
-
-		//导航
-_('.layui-nav-item').on('mouseenter',function(e){
-	//隐藏子菜单
-	_('.layui-show').removeClass('layui-show');
-	//清除标记
-	_('.layui-nav-item').removeClass('layui-this layui-mouseenter');
-	//添加标记,显示子菜单
-	_(e.target).addClass('layui-this layui-mouseenter').find('.layui-nav-child').addClass('layui-show');
-}).on('mouseleave',function(e){
-	setTimeout(function(){	
-		//移除标记
-		if(!_(e.target).hasClass('layui-mouseenter'))
-		_('.mouseenter-nave-child').removeClass('layui-show mouseenter-nave-child');	
-	},100);	
-});
-
-_('.layui-nav-child').on('mouseenter',{class:'layui-nav-child'},function(e){
-	setTimeout(function(){		
-	_('.layui-mouseenter').removeClass('layui-mouseenter');
-	},101);
-}).on('mouseout',function(e){
-	//子菜单标记
-	_(e.target).addClass('mouseenter-nave-child');
-});
-	
 function loadPid(pid){
 	_.get( './articles/pid/'+pid+'.pid.json?t='+Math.random(),function(r){
 	loadContent('./'+r.url,r);
@@ -94,7 +64,7 @@ function loadContent(url,_r){
 	
 		var f=url.split('/');	
 		var t=f[f.length-2].replace(/\.title.*?$/,'');
-		var title='<h2>'+t+'</h2>';
+		var title='<h2>'+t+'</h2><hr>';
 		document.title=t;		
 		r=title+marked(r.replace(/<pre>/g, "<pre class='hljs'>"))+ '<hr><small>文档创建: '+fillZero(_r.createtime)+'<br />最后编辑: '+fillZero(_r.updatetime)+'</small>';
 		_('#contentCtn').html(r).qAll('img,audio,video,script,link').each(function(o){
@@ -106,9 +76,11 @@ function loadContent(url,_r){
 		});
 		
 		_('#contentCtn').qAll('code').each(function(o){
-			o.innerHTML=hljs.highlightAuto(o.textContent).value			
+			
+			o.innerHTML=hljs.highlightAuto(o.textContent).value;
+			hljs.lineNumbersBlock(o);
 		});
-	
+		
 		//showList(articles_list);
 		t=null;	
 	});
@@ -148,13 +120,9 @@ function showList(e){
 		 //if( postTitle.length===1)continue;
 		
 		 var tit=postTitle[postTitle.length-2].replace(/\.title$/ig,'');
-		 var aLink='<a target="_blank" href="./?p='+posts[i].pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit+'</a>'
+		 var aLink='<a href="./?p='+posts[i].pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit+'</a>'
 		 htmlArr.push('<li class="">'+aLink+'</li>');
-		/*if(/\.top$/.test(tit)){
-			
-				loadPid(posts[i].pid);
-		
-		 }*/
+	
 		if(recentNum++<10)getMenu(['最近更新','<small>'+posts[i].updatetime+'</small> '+aLink],0,menuJn);
 		
 		var p=posts[i].url.split('/');

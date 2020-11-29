@@ -221,7 +221,7 @@ textarea {
     vertical-align: baseline;
     *vertical-align: middle;
 }*/
-button, input {
+button, .input {
     line-height: normal;
     *overflow: visible;
 }
@@ -230,49 +230,49 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     padding: 0;
 }
 button,
-input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+.input[type="button"],
+.input[type="reset"],
+.input[type="submit"] {
     cursor: pointer;
     -webkit-appearance: button;
 }
-input[type=checkbox], input[type=radio] {
+.input[type=checkbox], input[type=radio] {
     cursor: pointer;
 }
 /* override default chrome & firefox settings */
-/*input:not([type="image"]), textarea {
+input:not([type="image"]), textarea {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
-*/
-input[type="search"] {
+
+.input[type="search"] {
     -webkit-appearance: textfield;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
-input[type="search"]::-webkit-search-decoration {
+.input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
-}/*
-label,
-input,
-select,
-textarea {
+}
+.label,
+.input,
+.select,
+.textarea {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: normal;
     line-height: normal;
     margin-bottom: 18px;
-}*/
-input[type=checkbox], input[type=radio] {
+}
+.input[type=checkbox], input[type=radio] {
     cursor: pointer;
     margin-bottom: 0;
-}/*
-input[type=text],
-input[type=password],
-textarea,
-select {
+}
+.input[type=text],
+.input[type=password],
+.textarea,
+.select {
     display: inline-block;
     width: 210px;
     padding: 4px;
@@ -286,14 +286,14 @@ select {
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
-select, input[type=file] {
+.select, .input[type=file] {
     height: 27px;
     line-height: 27px;
-}*/
-/*
-textarea {
+}
+
+.textarea {
     height: auto;
-}*/
+}
 /* grey out placeholders */
 :-moz-placeholder {
     color: #bfbfbf;
@@ -301,27 +301,27 @@ textarea {
 ::-webkit-input-placeholder {
     color: #bfbfbf;
 }
-input[type=text],
-input[type=password],
-/*select,
-textarea {
+.input[type=text],
+.input[type=password],
+.select,
+.textarea {
     -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
     transition: border linear 0.2s, box-shadow linear 0.2s;
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}*/
-/*
-input[type=text]:focus, input[type=password]:focus, textarea:focus {
+}
+
+.input[type=text]:focus, .input[type=password]:focus, .textarea:focus {
     outline: none;
     border-color: rgba(82, 168, 236, 0.8);
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
     -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
-}*/
+}
 /* buttons */
-button {
+.button {
     display: inline-block;
     padding: 4px 14px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -352,17 +352,17 @@ button {
     border-color: #0064cd #0064cd #003f81;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
-button:hover {
+.button:hover {
     color: #fff;
     background-position: 0 -15px;
     text-decoration: none;
 }
-button:active {
+.button:active {
     -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-button::-moz-focus-inner {
+.button::-moz-focus-inner {
     padding: 0;
     border: 0;
 }
@@ -500,10 +500,7 @@ padding: 0.5em;
 background: #002b36;
 color: #839496;
 }
-pre{
 
-
-}
 
 .code-part{
 margin:0!important;

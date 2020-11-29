@@ -145,7 +145,7 @@ xx.post=function(url, data, _callback,_error){
        callback:回调函数,方便用户处理自己的数据,传递逻辑           
 */
 function params(json){
-  let paramArr = []
+  let paramArr = [];
   for (let p in json) {
     paramArr.push(p + '=' +  encodeURIComponent(json[p]));
   }

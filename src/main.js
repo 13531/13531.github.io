@@ -157,7 +157,7 @@ function showList(e){
 		 var aLink='<a href="./?p='+posts[i].pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit.replace(/^\d+@/,'')+'</a>'
 		// htmlArr.push('<li class="">'+aLink+'</li>');
 	
-		if(recentNum++<5)getMenu(['最近更新','<!--'+(100000+i)+'排序--><small>'+posts[i].updatetime+'</small> '+aLink],0,menuJn);
+		if(recentNum++<30)getMenu(['最近更新','<!--'+(100000+i)+'排序--><small>'+posts[i].updatetime+'</small> '+aLink],0,menuJn);
 		//分割链接 组成分类
 		var p=posts[i].url.split('/');
 	
@@ -216,11 +216,12 @@ function showList(e){
 		});
 	}else{
 		document.title='welcome!';
-		_('#menuContainer').show();
+		//_('#menuContainer').show();
 	
 	
-//	_('.menu-child-1:first-child').show();	
-	//_('.menu-child-1:last-child').show();
+ 	var c=_('.menu-child-1');		
+	_(c.nodes[0]).show();
+	_(c.nodes[c.nodes.length-1]).show();
 
 	}
 }

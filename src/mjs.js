@@ -301,7 +301,39 @@ xx.pasteTextOnly=function(o,func){
 			if(func)func();
 	});
 }
+xx.loadJs=function(url, callback) {
+    var script = document.createElement('script');
+    script.type = "text/javascript";
+    if (typeof(callback) != "undefined") {
+        if (script.readyState) {
+            script.onreadystatechange = function () {
+                if (script.readyState == "loaded" || script.readyState == "complete") {
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            }
+        } else {
+            script.onload = function () {
+                callback();
+            }
+        }
+    }
+    script.src = url;
+    document.body.appendChild(script);
+}
 
+xx.loadJsArr=function(jsArr,callback){
+	if(jsArr[0]&&jsArr[0].length>0){
+	
+	xx.loadJs(jsArr[0],function(){
+		xx.loadJsArr(jsArr,callback);
+		
+	})
+	jsArr.shift();
+	}else{
+		callback();
+	}
+}
 //附加功能
 xx.prototype = {
 	/*eventNamespace:new Map,*/
@@ -346,7 +378,7 @@ xx.prototype = {
 					
                 break;
             default:
-				if(/:/.test(f)){
+				if(/:|^#/.test(f)){
 					 this.node = document.querySelector(f);
 				}else{
                 var r = document.querySelectorAll(f);
@@ -358,8 +390,8 @@ xx.prototype = {
             this.node = f;
         }
         return this;
-    },
-    ap: function () {
+    }
+    ,ap: function () {
         if (typeof arguments[0] === 'object') {
             aim[arguments[1]](arguments[0].node || arguments[0], this.node);
         } else {

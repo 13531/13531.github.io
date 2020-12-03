@@ -50,15 +50,20 @@ function loadContent(url,_r){
 			f[f.length-1]=s[s.length-1];			
 			o.href=f.join('/');
 			_(o).ap(_('head'),'<]>').attr({'rel':'stylesheet'})			
-		})._qAll('img,audio,video,script').each(function(o){	
+		})._qAll('img,audio,video,script').each(function(o){
+						
 		//修改src链接
 			if(o.src.length==0)return;
 			var s=o.src.split('/');
 			f[f.length-1]=s[s.length-1];			
-			o.src=f.join('/');			
-		})._qAll('script').each(function(o){	
+			o.src=f.join('/');
+			
+		})._qAll('script').each(function(o){
+   
 		//使script 生效		
 			_(o.outerHTML).ap(_('body'),'<]>')
+			
+			
 		})._qAll('code').each(function(o){						
 			hightlight(o);
 			_(o).addClass('sh_sourcecode');
@@ -233,7 +238,4 @@ _('#unfold').on('click',function(){
 _('#contentCtn').on('mousedown','',function(e){
 	console.log(e.target);
 	
-})
-_('#historyBack').on('click',function(){
-window.history.go(-1);
-});	
+});

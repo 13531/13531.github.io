@@ -1,6 +1,6 @@
 var public_key = '0123456789abcdef'; // 密钥, AES-128 需 16 字符, AES-256 需要32个字符, 
 var public_iv = 'abcdef0123456789';  // 初始向量 initial vector 16 个字符
-//上传密码
+//上传密码 1
 /*var key=fillkey('000008');*/
 // key = fillKey(key); //如果密码不足 16位, 需 `\x00` 填充
 /*public_key = CryptoJS.enc.Utf8.parse(public_key);*/

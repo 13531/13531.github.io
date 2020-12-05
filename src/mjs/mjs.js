@@ -305,6 +305,21 @@ xx.pasteTextOnly=function(o,func){
 			if(func)func();
 	});
 }
+xx.execCopy=function(text) {
+	try {
+	  var input = document.createElement('textarea');
+	  input.style.opacity = 0;
+	  input.style.position = 'absolute';
+	  input.style.left = '-100000px';
+	  document.body.appendChild(input);
+	  input.value = text;
+	  input.select();
+	  input.setSelectionRange(0, text.length);
+	  document.execCommand('copy');
+	  document.body.removeChild(input);
+	} catch (e) { }
+	return true;
+  }
 xx.loadJs=function(url, callback) {
     var script = document.createElement('script');
     script.type = "text/javascript";
@@ -844,7 +859,7 @@ console.info('ap.js');
 xx.prototype.init.prototype = xx.prototype;
 _window._=_window.mjs=xx;
 
-})(window)
+})(window);
 
 //export default xx;
 //})();

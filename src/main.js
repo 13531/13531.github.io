@@ -148,7 +148,7 @@ function showList(e){
 	var htmlArr=[],postTitle='',url;
 	var menuJn={};
 	var recentNum=0;
-	for(var i in posts){
+	for(var i=0,lng=posts.length;i<lng;i++){
 
 		 postTitle=posts[i].url.split('/');
 		 //if( postTitle.length===1)continue;
@@ -236,7 +236,4 @@ _('#menu').on('click',{'data-menu-id':null},function(e){
 _('#unfold').on('click',function(){
 	_('.menu-child').show();
 });
-_('#contentCtn').on('mousedown','',function(e){
-	console.log(e.target);
-	
-});
+

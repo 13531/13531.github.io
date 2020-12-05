@@ -6,3 +6,5 @@
 [cloudnote所有任务](http://cloudnote.coolpage.biz/notes/task?task_type=all-task-word)
 
 [局域网notes测试](http://192.168.2.101/notes/login)
+
+$\frac {a+c+1}{b+c+2}$

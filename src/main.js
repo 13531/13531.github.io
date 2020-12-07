@@ -237,3 +237,13 @@ _('#unfold').on('click',function(){
 	_('.menu-child').show();
 });
 
+var debug=_.localGet('debug');
+
+if(debug==='1'){
+	_.loadJsArr(['./src/mjs/web-console.js'],
+	function(){
+		console.log('wsConsole.js');
+		
+	}
+	);
+}

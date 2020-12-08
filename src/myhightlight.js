@@ -1,112 +1,12 @@
-var kw={};
-kw.a=["abstract","arguments","boolean","break","byte","case","catch","char","class","const","continue","debugger","default","delete","do","double","else","enum","eval","export","extends","false","final","finally","float","for","function","goto","if","implements","import","in","instanceof","int","interface","let","long","native","new","null","package","private","protected","public","return","short","static","super","switch","synchronized","this","throw","throws","transient","true","try","typeof","var","void","volatile","while","with","yield"];
-
-kw.b=["Array","Date","eval","function","hasOwnProperty","Infinity","isFinite","isNaN","isPrototypeOf","length","Math","NaN","name","Number","Object","prototype","String","toString","undefined","valueOf"];
-
-kw.c=["alert","all","anchor","anchors","area","assign","blur","button","checkbox","clearInterval","clearTimeout","clientInformation","close","closed","confirm","constructor","crypto","decodeURI","decodeURIComponent","defaultStatus","document","element","elements","embed","embeds","encodeURI","encodeURIComponent","escape","event","fileUpload","focus","form","forms","frame","innerHeight","innerWidth","layer","layers","link","location","mimeTypes","navigate","navigator","frames","frameRate","hidden","history","image","images","offscreenBuffering","open","opener","option","outerHeight","outerWidth","packages","pageXOffset","pageYOffset","parent","parseFloat","parseInt","password","pkcs11","plugin","prompt","propertyIsEnum","radio","reset","screenX","screenY","scroll","secure","select","self","setInterval","setTimeout","status","submit","taint","text","textarea","top","unescape","untaint","window"];
-kw.d=["onblur","onclick","onerror","onfocus","onkeydown","onkeypress","onkeyup","onmouseover","onload","onmouseup","onmousedown","onsubmit"];
-
-kw.e=["as","in","of","if","for","while","finally","var","new","function","do","return","void","else","break","catch","instanceof","with","throw","case","default","try","switch","continue","typeof","delete","let","yield","const","class","debugger","async","await","static","import","from","export","extends"];
-
-kw.f=["setInterval","setTimeout","clearInterval","clearTimeout","require","exports","eval","isFinite","isNaN","parseFloat","parseInt","decodeURI","decodeURIComponent","encodeURI","encodeURIComponent","escape","unescape"];
-kw.g=["arguments","this","super","console","window","document","localStorage","module","global"];
-
-kw.h=["Intl","DataView","Number","Math","Date","String","RegExp","Object","Function","Boolean","Error","Symbol","Set","Map","WeakSet","WeakMap","Proxy","Reflect","JSON","Promise","Float64Array","Int16Array","Int32Array","Int8Array","Uint16Array","Uint32Array","Float32Array","Array","Uint8Array","Uint8ClampedArray","ArrayBuffer"];
-kw.i=["EvalError","InternalError","RangeError","ReferenceError","SyntaxError","TypeError","URIError"]
-kw.j=["true","false","null","undefined","NaN","Infinity"];
-var kwMap=new Map();
-
-
-function addMap(arr,attr){
-	for(var i in arr){
-		 kwMap.set(arr[i],'<span class="'+attr+'">'+arr[i]+'</span>');
-	}
-	
-} 
-function getK_dot(k){
-	return kwMap.has(k)?kwMap.get(k):'<span style="color:#a376f7">'+k+'</span>';
-}
-function getK_left(k){
-	return kwMap.has(k)?kwMap.get(k):'<span class="sh_function">'+k+'</span>';
-}
-function getK(k){
-	return kwMap.has(k)?kwMap.get(k):k;
-}
-var getKeyWord=function(k,k2,k3){
-	
-	//console.log(k,k2,k3);
-	if(/\./.test(k)){
-		var a=k.split('.');
-	return 	k.replace(/\.(.+$)/,'.<span c="color:#a376f7">$1</span>')+k2;
-	}else {
-		if(/(^§?\()/.test(k2)){
-			return getK_left(k)+k2
-		}else{
-			return getK(k)+k2;
-		}
-	}
-}
-addMap(kw.a,'sh_keyword');
-addMap(kw.b,'sh_keyword');
-addMap(kw.c,'sh_keyword');
-addMap(kw.d,'sh_keyword');
-addMap(kw.e,'sh_keyword');
-addMap(kw.f,'sh_keyword');
-addMap(kw.g,'sh_keyword');
-addMap(kw.h,'sh_predef_func');
-addMap(kw.i,'sh_keyword');
-addMap(kw.j,'sh_predef_var');
-function sh_konquerorExec(s) {
-  var result = [''];
-  result.index = s.length;
-  result.input = s;
-  return result;
-}
-function testMYHL(text){
-	
-	console.time('aaaa');
-	var language=sh_languages['javascript_test_1'];
-	var reArr=[];
-	/*for (var s = 0; s < language.length; s++) {
-        for (var p = 0; p < language[s].length; p++) {
-          var r = language[s][p][0];
-		  var rep=language[s][p][1]
-          if (r.source === '$') {
-            r.exec = sh_konquerorExec;
-          }
-		
-		
-		  reArr.push([r,function(p){
-			  return '<span class="'+ rep+'">'+p+'</span>'
-		  }]);
-        }
-      }*/
-	 for(var i in language){
-		 var re=language[i][0];
-		 var classname=language[i][1];
-		  (function(r,x){
-		
-		
-		 reArr.push([r,function(p){
-			  return '<span class="'+x+'">'+p+'</span>'
-		  }])
-		 })(re,classname)
-	 }
-	 console.log(reArr)
-	var res=branchReplace(text,reArr);	
-	console.timeEnd('aaaa');
-	return res;
-}
-
 function hightlight(o){
 	//o.style.display='none';
 	console.time('my_hljs')
 	var code=o.innerHTML;
 	var orginalCode=code;
-	o.innerHTML='';
+	//o.innerHTML='';
 	//.replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&").replace(/^\n|^\r/,"");=
 	//o.innerHTML=code.innerHTML.replace(/^\n|^\r/,"");
-	
+	var title=document.title;
 	var textValue={};
 	var replaceValue={};
 	var mark="𪚥";
@@ -253,6 +153,7 @@ function hightlight(o){
 		
 		resHtml+=addLineNum(arr[n]);
 		//resHtml+=arr[n];
+		
 		if(timer)clearTimeout(timer);				
 		timer=setTimeout(function(){
 			document.title=n+'_'+len;			
@@ -271,7 +172,7 @@ function hightlight(o){
 	timerEach(arr,0,arr.length-1,
 	function(){	
 		console.log(resHtml.length);
-		_(o).html(resHtml).show();
+		_(o).html(resHtml).vShow();
 		console.log('长度',o.textContent.length,orginalCode.length);
 		//o.innerHTML=resHtml;
 		console.timeEnd('my_hljs');
@@ -289,7 +190,7 @@ function hightlight(o){
 		
 		
 		
-			
+			document.title=title;
 		}
 	);		
 	

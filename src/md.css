@@ -2,13 +2,14 @@ body{
     margin: 0 auto;
     font-family: "Microsoft YaHei", arial,sans-serif;
     color: #444444;
-    line-height: 1;
-    padding: 30px;
+    line-height: 0;
+    padding: 0px;
 } 
 @media screen and (min-width: 768px) {
    body {
         width: 748px;
-        margin: 10px auto;
+        margin: 0 auto;
+		
     }
 }
 
@@ -505,6 +506,10 @@ color: #839496;
 .code-part{
 margin:0!important;
 padding:0!important;	
+}
+#menu{
+ line-height:1;
+ margin:0;
 }
 #menu a {
 	

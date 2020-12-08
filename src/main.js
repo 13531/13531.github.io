@@ -25,7 +25,11 @@ marked.setOptions({
 function loadPid(pid){
 	_.get( './articles/pid/'+pid+'.pid.json?t='+Math.random(),function(r){
 		if(r.url){
-			loadContent('./'+r.url,r);
+			var url=r.url.replace(/[^\/]/g,function(p){
+				return encodeURIComponent(p);
+			});
+			
+			loadContent('./'+url,r);
 		}else{
 			_('#contentCtn').html('<h4>该文章不存在</h4>');
 		}
@@ -34,7 +38,7 @@ function loadPid(pid){
 }
 function loadContent(url,_r){	
 	_.get( url+'?t=a'+Math.random(),function(r){	
-		var f=url.split('/');	
+		var f=_r.url.split('/');	
 		var t=f[f.length-2].replace(/\.title.*?$/,'').replace(/^\d+@/,'');
 		var title='<h2>'+t+'</h2><hr>';
 		document.title=t;		
@@ -42,8 +46,8 @@ function loadContent(url,_r){
 		r=r.replace(/(<code[^>]*>)([\s\S]*?)(<\/code>)/ig,function(p,p1,p2,p3){	
 			return p1+p2.replace(/</g,"&lt;").replace(/>/g,"&gt;")+p3;
 		});
-			
-		_('#contentCtn').html(r)._qAll('link').each(function(o){
+		var hasCode=false;
+		var contentCtn=_('#contentCtn').html(r)._qAll('link').each(function(o){
 			//修改href链接
 			if(o.href.length==0)return;
 			var s=o.href.split('/');
@@ -64,23 +68,21 @@ function loadContent(url,_r){
 			_(o.outerHTML).ap(_('body'),'<]>')
 			
 			
-		})._qAll('code').each(function(o){						
-			hightlight(o);
-			_(o).addClass('sh_sourcecode');
-			/*o.style.display='none';
-			console.time('MYHL---')
-			
-			var res=testMYHL(o.innerHTML);
-			console.log('长度:',res.length);
-			var s=res.split('\n');
-			o.innerHTML=s.length;//res.substring(0,99999);
-			o.style.display='block';
-		
-			_(o).html(res);
-			
-			console.timeEnd('MYHL---')*/
-			//o.innerHTML=testMYHL(o.innerHTML);			
+		})._qAll('code').each(function(o){
+			hasCode=true;
+			_(o).addClass('sh_sourcecode').vHide();					
+					
 		});
+		
+		if(hasCode){
+		_.loadJsArr(['./src/myhightlight.js'],function(){			
+				contentCtn._qAll('code').each(function(o){
+					hightlight(o);
+					
+				});
+			});			
+			
+		}
 		/*
 		console.time('shjs')
 		var lineNum=0;
@@ -133,7 +135,7 @@ function showList(e){
 	}
 	//按更新时间排序
 	posts.sort(compare('_updatetime'));
-	console.log(posts)
+	//console.log(posts)
 	
 	function fillZeroMark(f){		
 		return f.replace(/(^\d+)@/,function(p1,p){
@@ -148,16 +150,27 @@ function showList(e){
 	var htmlArr=[],postTitle='',url;
 	var menuJn={};
 	var recentNum=0;
+	var showall=_.localGet('showall');
+	
 	for(var i=0,lng=posts.length;i<lng;i++){
-
+		//要到 数字.json 文件转义网址
+		/*posts[i].url=posts[i].url.replace(/#/g,function(p){
+			return encodeURIComponent(p);
+		})*/
 		 postTitle=posts[i].url.split('/');
-		 //if( postTitle.length===1)continue;
+		 //for(var p in postTitle){
+			 // postTitle[p]=encodeURIComponent(postTitle[p]);
+		// }
+		// posts[i].url=postTitle.join('/');
 		
+		 //if( postTitle.length===1)continue;
+		if(showall!=='y'&&/#hide#/.test(posts[i].url))continue;
 		 var tit=postTitle[postTitle.length-2].replace(/\.title$/ig,'');
+		
 		 var aLink='<a href="./?p='+posts[i].pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit.replace(/^\d+@/,'')+'</a>'
 		// htmlArr.push('<li class="">'+aLink+'</li>');
 	
-		if(recentNum++<30)getMenu(['最近更新','<!--'+(100000+i)+'排序--><small>'+posts[i].updatetime+'</small> '+aLink],0,menuJn);
+		if(recentNum++<30)getMenu(['最近更新','<!--'+(100000+i)+'排序--><small>'+posts[i].updatetime.split(' ')[0]+'</small> '+aLink],0,menuJn);
 		//分割链接 组成分类
 		var p=posts[i].url.split('/');
 	
@@ -175,6 +188,7 @@ function showList(e){
 	}
 	var arrTree=[];
 	var menuHtml=[];
+	
 	//json按key键排序
 	function jsonSort(jsonObj,num) {
 		let arr = [];

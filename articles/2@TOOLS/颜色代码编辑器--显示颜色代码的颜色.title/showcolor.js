@@ -52,10 +52,10 @@ function getHslaRgb(color){
 */
 
 var ck=new Map();
-var words='LightGoldenRodYellow|MediumSpringGreen|MediumAquaMarine|MediumSlateBlue|MediumTurquoise|MediumVioletRed|BlanchedAlmond|CornflowerBlue|DarkOliveGreen|LightSlateBlue|LightSlateGray|LightSteelBlue|MediumSeaGreen|DarkGoldenRod|DarkSlateBlue|DarkSlateGray|DarkTurquoise|LavenderBlush|LightSeaGreen|PaleGoldenRod|PaleTurquoise|PaleVioletRed|AntiqueWhite|DarkSeaGreen|LemonChiffon|LightSkyBlue|MediumOrchid|MediumPurple|MidnightBlue|DarkMagenta|DeepSkyBlue|FloralWhite|ForestGreen|GreenYellow|LightSalmon|LightYellow|NavajoWhite|SaddleBrown|SpringGreen|YellowGreen|Aquamarine|BlueViolet|Chartreuse|Darkorange|DarkOrchid|DarkSalmon|DarkViolet|DodgerBlue|GhostWhite|LightCoral|LightGreen|MediumBlue|PapayaWhip|PowderBlue|SandyBrown|WhiteSmoke|AliceBlue|BurlyWood|CadetBlue|Chocolate|DarkGreen|DarkKhaki|FireBrick|Gainsboro|GoldenRod|IndianRed|LawnGreen|LightBlue|LightCyan|LightGrey|LightPink|LimeGreen|MintCream|MistyRose|OliveDrab|OrangeRed|PaleGreen|PeachPuff|RosyBrown|RoyalBlue|SlateBlue|SlateGray|SteelBlue|Turquoise|VioletRed|Cornsilk|DarkBlue|DarkCyan|DarkGray|DeepPink|Feldspar|HoneyDew|Lavender|Moccasin|SeaGreen|SeaShell|Crimson|DarkRed|DimGray|Fuchsia|HotPink|Magenta|OldLace|SkyBlue|Thistle|Bisque|Indigo|Maroon|Orange|Orchid|Purple|Salmon|Sienna|Silver|Tomato|Violet|Yellow|Azure|Beige|Black|Brown|Coral|Green|Ivory|Khaki|Linen|Olive|Wheat|White|Aqua|Blue|Cyan|Gold|Gray|Lime|Navy|Peru|Pink|Plum|Snow|Teal|Red|Tan';
-var wordsArr=words.split(/\|/);
-for(var i in wordsArr){	
-	var p=wordsArr[i].toLowerCase();
+var colorNames='LightGoldenRodYellow|MediumSpringGreen|MediumAquaMarine|MediumSlateBlue|MediumTurquoise|MediumVioletRed|BlanchedAlmond|CornflowerBlue|DarkOliveGreen|LightSlateBlue|LightSlateGray|LightSteelBlue|MediumSeaGreen|DarkGoldenRod|DarkSlateBlue|DarkSlateGray|DarkTurquoise|LavenderBlush|LightSeaGreen|PaleGoldenRod|PaleTurquoise|PaleVioletRed|AntiqueWhite|DarkSeaGreen|LemonChiffon|LightSkyBlue|MediumOrchid|MediumPurple|MidnightBlue|DarkMagenta|DeepSkyBlue|FloralWhite|ForestGreen|GreenYellow|LightSalmon|LightYellow|NavajoWhite|SaddleBrown|SpringGreen|YellowGreen|Aquamarine|BlueViolet|Chartreuse|Darkorange|DarkOrchid|DarkSalmon|DarkViolet|DodgerBlue|GhostWhite|LightCoral|LightGreen|MediumBlue|PapayaWhip|PowderBlue|SandyBrown|WhiteSmoke|AliceBlue|BurlyWood|CadetBlue|Chocolate|DarkGreen|DarkKhaki|FireBrick|Gainsboro|GoldenRod|IndianRed|LawnGreen|LightBlue|LightCyan|LightGrey|LightPink|LimeGreen|MintCream|MistyRose|OliveDrab|OrangeRed|PaleGreen|PeachPuff|RosyBrown|RoyalBlue|SlateBlue|SlateGray|SteelBlue|Turquoise|VioletRed|Cornsilk|DarkBlue|DarkCyan|DarkGray|DeepPink|Feldspar|HoneyDew|Lavender|Moccasin|SeaGreen|SeaShell|Crimson|DarkRed|DimGray|Fuchsia|HotPink|Magenta|OldLace|SkyBlue|Thistle|Bisque|Indigo|Maroon|Orange|Orchid|Purple|Salmon|Sienna|Silver|Tomato|Violet|Yellow|Azure|Beige|Black|Brown|Coral|Green|Ivory|Khaki|Linen|Olive|Wheat|White|Aqua|Blue|Cyan|Gold|Gray|Lime|Navy|Peru|Pink|Plum|Snow|Teal|Red|Tan';
+var colorNamesArr=colorNames.split(/\|/);
+for(var i in colorNamesArr){	
+	var p=colorNamesArr[i].toLowerCase();
 	var r='<span class="edit-color" style="background-color:'+p+'">';
 	ck.set(p,r);
 }
@@ -78,21 +78,6 @@ var colorName=function(p,p1,p2){
 	return arguments[1]+getColorMap(arguments[2]);
 	}
 
-var testColor=function(p){
-	
-	var c='';
-	//if(p==='\\\\')c='pink';
-	if(p==='\\w')c='green';
-	if(p==='\\d')c='blue';
-	if(p==='\\s')c='white';
-	if(p==='\\b')c='linghtblue';
-	if(p==='\\n')c='linghtblue';
-	if(p==='\\r')c='linghtblue';
-	if(p==='\\t')c='linghtblue';
-	if(p==='\\D')c='linghtblue';
-	if(p==='\\W')c='linghtblue';
-	return '<span style="background-color:'+c+'">'+p+'</span>'
-}	
 var reArr=[
 	[/(#([a-f0-9]{8}|[a-f0-9]{6}|[a-f0-9]{3}))|((rgb|hsl)(a)?\(((\s+)?\d+(%)?(\s)?\,){2}(\s+)?\d+(%)?(\s+)?(,(\s+)?(0|1|0\.\d+|\.\d+))?(\s+)?\))/img,colorCode],	
 	[/([^a-z])([a-z]+)/igm, colorName],
@@ -106,7 +91,6 @@ var edtOuter=_('#editor-outer');
 var edtBox=_('#editor-box');
 var code= edt.html();
 
-console.log('啊???');
 /*备份
 (#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}))|(rgb(a)?(\s+)?\(((\s+)?\d+(%)?(\s)?\,){2}(\s+)?\d+(%)?(\s+)?(,(\s+)?(0|1|0\.\d+|\.\d+))?(\s+)?\))/igm;
 */
@@ -123,6 +107,7 @@ function addColor(code){
 var xxbox=_.createBox();
 var boxCtn=xxbox.container;
 var boxContent=xxbox.content;
+boxCtn.css({'zIndex':9});
 xxbox.container.css({border:'1px solid gray',textShadow:'1px 1px 1px #FFF',color:'#000'   });
 xxbox.title.html('<div style="padding:4px">编辑颜色</div>');
 

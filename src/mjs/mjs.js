@@ -238,7 +238,7 @@ xx.localGet=function(variable){
 		   var pair = vars[i].split("=");
 		   if(pair[0] == variable){return pair[1];}
    }
-   return(false);
+   //return undefined;
 }
 //锁定后退键
 xx.lockBackspace=function(){
@@ -505,12 +505,24 @@ xx.prototype = {
         return this;
 
     },
-    show: function () {
+    show:function () {
         this.each(function (o) {
             o.style.display = 'block';
         });
 		return this;
     },
+	vHide:function(){
+		this.each(function (o) {
+            o.style.visibility='hidden';
+        });
+		return this;
+	},
+	vShow:function(){
+		this.each(function (o) {
+            o.style.visibility = 'visible';
+        });
+		return this;
+	},
     attr: function (d,f) {
         if (typeof d === 'string'&&!f) {
             

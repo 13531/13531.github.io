@@ -20,15 +20,22 @@ marked.setOptions({
   
 });
 
-
+String.prototype.urlEncode=function(){	
+	return this.replace(/[^\/]/g,function(p){
+			
+			/*	if(/\p{Unified_Ideograph}/u.test(p)){
+					console.log(p);
+					return p;
+				}*/
+				return encodeURIComponent(p);
+			});
+}
 
 function loadPid(pid){
 	_.get( './articles/pid/'+pid+'.pid.json?t='+Math.random(),function(r){
 		if(r.url){
-			var url=r.url.replace(/[^\/]/g,function(p){
-				return encodeURIComponent(p);
-			});
-			
+			var url=r.url.urlEncode();
+		
 			loadContent('./'+url,r);
 		}else{
 			_('#contentCtn').html('<h4>该文章不存在</h4>');
@@ -48,6 +55,7 @@ function loadContent(url,_r){
 		});
 		var hasCode=false;
 		var contentCtn=_('#contentCtn').html(r)._qAll('link').each(function(o){
+			_(o).attr({'href':_(o).attr('href').urlEncode()});
 			//修改href链接
 			if(o.href.length==0)return;
 			var s=o.href.split('/');
@@ -55,7 +63,7 @@ function loadContent(url,_r){
 			o.href=f.join('/');
 			_(o).ap(_('head'),'<]>').attr({'rel':'stylesheet'})			
 		})._qAll('img,audio,video,script').each(function(o){
-						
+			_(o).attr({'src':_(o).attr('src').urlEncode()});
 		//修改src链接
 			if(o.src.length==0)return;
 			var s=o.src.split('/');
@@ -63,7 +71,7 @@ function loadContent(url,_r){
 			o.src=f.join('/');
 			
 		})._qAll('script').each(function(o){
-   
+			_(o).attr({'src':_(o).attr('src').urlEncode()});
 		//使script 生效		
 			_(o.outerHTML).ap(_('body'),'<]>')
 			
@@ -82,24 +90,7 @@ function loadContent(url,_r){
 				});
 			});			
 			
-		}
-		/*
-		console.time('shjs')
-		var lineNum=0;
-		sh_highlightDocument('hl/','.js');
-		_('#contentCtn').qAll('code').each(function(o){	
-			//sh_highlightDocument
-			o.innerHTML=o.innerHTML.replace(/\n/g,function(p){
-			lineNum++;
-			return p+'<input type="button" value="'+lineNum+'" />';
-			});
-			o.style.display='block';
-		});	
-		console.timeEnd('shjs')
-		*/
-		
-		
-		
+		}		
 	},function(err){
 		_('#contentCtn').html('获取数据失败!');
 		

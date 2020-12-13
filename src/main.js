@@ -48,7 +48,7 @@ function loadPid(pid){
 function loadContent(url,_r){	
 	_.get( url+'?t=a'+Math.random(),function(r){	
 		var f=_r.url.split('/');	
-		var t=f[f.length-2].replace(/\.title.*?$/,'').replace(/^\d+@/,'').replace(/^#\{.*?\}#/,'');
+		var t=f[f.length-2].replace(/\.title.*?$/,'').replace(/^\d+@/,'').replace(/^\{\{.*?\}\}/,'');
 		var title='<h2>'+t+'</h2><hr>';
 		document.title=t;		
 		r=title+marked(r)+ '<hr><small>文档创建: '+fillZero(_r.createtime)+'<br />最后编辑: '+fillZero(_r.updatetime)+'</small>';	

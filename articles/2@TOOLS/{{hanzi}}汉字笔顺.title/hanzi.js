@@ -17,7 +17,9 @@ function draw(o,nh) {
    
    var o = o.replace(/^./, '');
 */ var t = o.charAt(0);
-if(!/\p{Unified_Ideograph}/u.test(t))return;
+//ie11无效
+//if(!/\p{Unified_Ideograph}/u.test(t))return;
+
     if (saveData.has(t)) {
         testCanvas(saveData.get(t));
 		if(!nh)_('#hanzi-history').ap('<]>',_('<a href="javascript:;">'+o+'</a>'));
@@ -119,7 +121,7 @@ var ctx = getCTX();
 ctx.fillStyle = "black";
 var testCanvas = function (hz) {
     cvs.width = cvs.width;
-    console.log(hz);
+    //console.log(hz);
     var N = contentCtn.width() / 2000; //字体百分比
     var arr1 = hz.strokes;
     var arr2 = hz.medians;
@@ -127,9 +129,8 @@ var testCanvas = function (hz) {
     var arr4 = [];
     var rad = {};
     if (hz.radStrokes) {
-        for (var i of hz.radStrokes) {
-            
-            rad[i] = 1;
+        for (var i in hz.radStrokes) {            
+            rad[hz.radStrokes[i]] = 1;
         }
     }
     if (JSON.stringify(rad) === '{}') {

@@ -32,8 +32,19 @@ String.prototype.urlEncode=function(){
 }
 var nameToPid={};
 var pidToName={};
+var nameToUrl={};
+var pidToUrl={};
+var dataJn={};
 function loadPid(pid){
+	//nameToPid 依赖articles-list.js
 	if(nameToPid[pid])pid=nameToPid[pid];
+
+	if(dataJn[pid]){
+	//依赖  articles-list.js
+		loadContent('./articles'+pidToUrl[pid].urlEncode(),dataJn[pid]);
+	
+	}else{
+	//不需要articles-list.js
 	_.get( './articles/pid/'+pid+'.pid.json?t='+Math.random(),function(r){
 		if(r.url){
 			var url=r.url.urlEncode();
@@ -43,6 +54,7 @@ function loadPid(pid){
 			_('#contentCtn').html('<h4>该文章不存在</h4>');
 		}
 	});
+	}
 	
 }
 function loadContent(url,_r){	
@@ -127,13 +139,18 @@ function showList(e){
 		nameToPid[p1]=p2;
 		pidToName[p2]=p1;
 	});
-
+	
 	var posts=[];
-	for(var i=0,lng=arr.length-1;i<lng;i+=3){
+	for(var i=0,lng=arr.length-1;i<lng;i+=4){
 		var t=arr[i+2];
 		t=fillZero(t);
-		
+		pidToUrl[arr[i+1]]=arr[i];
 		//console.log(t);
+		dataJn[arr[i+1]]={ 
+		updatetime:arr[i+2],
+		createtime:arr[i+3],
+		url:'./articles'+arr[i]
+		}
 		posts.push({url:arr[i],pid:arr[i+1],_updatetime:+t.match(/\d+/g).join(''),updatetime:t})	
 	}
 	function compare(p){
@@ -242,7 +259,7 @@ function showList(e){
 		document.title='welcome!';
 		//_('#menuContainer').show();
 	
-	
+	//展开导航列表与最近更新列表
  	var c=_('.menu-child-1');		
 	_(c.nodes[0]).show();
 	_(c.nodes[c.nodes.length-1]).show();

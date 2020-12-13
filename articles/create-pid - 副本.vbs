@@ -127,7 +127,7 @@ IF StrComp(LCase(oFso.GetExtensionName(oFile)),"md")=0 Then
 	
 	aa=aa & Replace(ofile.path,cd,"") & "|"
 	aa=aa & pid & "|"	
-	aa=aa & objFile.DateLastModified & "|" & objFile.DateCreated &"|"
+	aa=aa & objFile.DateLastModified & "|"
 	
 	ws.run "cmd /c copy /y """ & filePath & """ """ & filePath & ".json""&&move /y  """& filePath & ".json"" " & " pid>nul" , vbhide		
 end if	

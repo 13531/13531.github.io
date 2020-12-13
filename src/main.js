@@ -123,7 +123,7 @@ function getMenu(arr,n,menu){
 }
 function showList(e){	
 	var arr=e.split('|');
-	e.replace(/#\{(.*?)\}#.*?\|(\d+)\|/g,function(p,p1,p2){
+	e.replace(/{\{(.*?)\}}.*?\|(\d+)\|/g,function(p,p1,p2){
 		nameToPid[p1]=p2;
 		pidToName[p2]=p1;
 	});
@@ -172,12 +172,12 @@ function showList(e){
 		// posts[i].url=postTitle.join('/');
 		
 		 //if( postTitle.length===1)continue;
-		if(showall!=='y'&&/#hide#/.test(posts[i].url))continue;
+		if(showall!=='y'&&/\{hide\}/.test(posts[i].url))continue;
 		 var tit=postTitle[postTitle.length-2].replace(/\.title$/ig,'');
 		var pid=posts[i].pid;
 		if(pidToName[pid])pid=pidToName[pid];
 		
-		 var aLink='<a href="./?p='+pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit.replace(/^\d+@/,'').replace(/^#\{.*?\}#/,'')+'</a>'
+		 var aLink='<a href="./?p='+pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit.replace(/^\d+@/,'').replace(/^\{\{.*?\}\}/,'')+'</a>'
 		// htmlArr.push('<li class="">'+aLink+'</li>');
 	
 		if(recentNum++<30)getMenu(['最近更新','<!--'+(100000+i)+'排序--><small>'+posts[i].updatetime.split(' ')[0]+'</small> '+aLink],0,menuJn);

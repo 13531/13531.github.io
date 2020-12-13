@@ -353,6 +353,24 @@ xx.loadJsArr=function(jsArr,callback){
 		callback();
 	}
 }
+
+xx.timerEach = function (arr, n, callback, finishFunc,t) {
+	if(n==0&&typeof t==='number')xx.timerEachDelay=t;   
+    xx.timer=setTimeout(function () {
+		callback(arr[n],n);
+        if(arr[++n]){
+			xx.timerEach(arr, n, callback,finishFunc,xx.timerEachDelay) ;
+		}else{
+			//xx.timerEachDelay=null;
+			finishFunc();
+		}
+    }, xx.timerEachDelay);
+}
+xx.isArray = function(arg) {
+  return Object.prototype.toString.call(arg) === '[object Array]';
+ }
+
+
 //附加功能
 xx.prototype = {
 	/*eventNamespace:new Map,*/

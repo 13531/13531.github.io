@@ -121,6 +121,7 @@ xxbox.content.html(''
 +'蓝　色(Ｂ)<input style="margin:0" class="color_rgb" type="range" id="color_b" value="50" min="0" max="255" step="1" ><br>'
 +'透明度(Ａ)<input style="margin:0" class="color_rgb color_hsla"  type="range" id="color_a" value="1" min="0" max="1" step="0.01"><br>'
 );
+
 var H,S,L,A,R,G,B,COLOR;
 var colorIpt={
 	h:_('#color_h'),
@@ -169,6 +170,7 @@ edt.on('keyup','*',function(e){
 		if(x>x1&&x<x2&&y>y1&&y<y2){
 			var orginalColor=o.style.backgroundColor;
 			edtOuter.css({'backgroundColor':orginalColor});
+			
 			var pos=_.findPos(o);
 		
 			boxCtn.setPos(pos.x,pos.y-boxH+h+10);//.css({'backgroundColor':o.style.backgroundColor});

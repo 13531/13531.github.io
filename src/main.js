@@ -30,8 +30,10 @@ String.prototype.urlEncode=function(){
 				return encodeURIComponent(p);
 			});
 }
-
+var nameToPid={};
+var pidToName={};
 function loadPid(pid){
+	if(nameToPid[pid])pid=nameToPid[pid];
 	_.get( './articles/pid/'+pid+'.pid.json?t='+Math.random(),function(r){
 		if(r.url){
 			var url=r.url.urlEncode();
@@ -46,7 +48,7 @@ function loadPid(pid){
 function loadContent(url,_r){	
 	_.get( url+'?t=a'+Math.random(),function(r){	
 		var f=_r.url.split('/');	
-		var t=f[f.length-2].replace(/\.title.*?$/,'').replace(/^\d+@/,'');
+		var t=f[f.length-2].replace(/\.title.*?$/,'').replace(/^\d+@/,'').replace(/^#\{.*?\}#/,'');
 		var title='<h2>'+t+'</h2><hr>';
 		document.title=t;		
 		r=title+marked(r)+ '<hr><small>文档创建: '+fillZero(_r.createtime)+'<br />最后编辑: '+fillZero(_r.updatetime)+'</small>';	
@@ -54,6 +56,7 @@ function loadContent(url,_r){
 			return p1+p2.replace(/</g,"&lt;").replace(/>/g,"&gt;")+p3;
 		});
 		var hasCode=false;
+		var scriptArr=[];
 		var contentCtn=_('#contentCtn').html(r)._qAll('link').each(function(o){
 			_(o).attr({'href':_(o).attr('href').urlEncode()});
 			//修改href链接
@@ -71,9 +74,16 @@ function loadContent(url,_r){
 			o.src=f.join('/');
 			
 		})._qAll('script').each(function(o){
-			_(o).attr({'src':_(o).attr('src').urlEncode()});
+			var src=_(o).attr('src').urlEncode();
+			var nocache=o.getAttribute('nocache');
+				if(nocache==='true'||nocache===true){
+					src=src+'?t='+Math.random();
+				
+				}
+			_(o).attr({'src':src});
+			scriptArr.push(src);
 		//使script 生效		
-			_(o.outerHTML).ap(_('body'),'<]>')
+			//_(o.outerHTML).ap(_('body'),'<]>')
 			
 			
 		})._qAll('code').each(function(o){
@@ -81,6 +91,8 @@ function loadContent(url,_r){
 			_(o).addClass('sh_sourcecode').vHide();					
 					
 		});
+		
+		_.loadJsArr(scriptArr,function(){});
 		
 		if(hasCode){
 		_.loadJsArr(['./src/myhightlight.js'],function(){			
@@ -111,6 +123,11 @@ function getMenu(arr,n,menu){
 }
 function showList(e){	
 	var arr=e.split('|');
+	e.replace(/#\{(.*?)\}#.*?\|(\d+)\|/g,function(p,p1,p2){
+		nameToPid[p1]=p2;
+		pidToName[p2]=p1;
+	});
+
 	var posts=[];
 	for(var i=0,lng=arr.length-1;i<lng;i+=3){
 		var t=arr[i+2];
@@ -157,8 +174,10 @@ function showList(e){
 		 //if( postTitle.length===1)continue;
 		if(showall!=='y'&&/#hide#/.test(posts[i].url))continue;
 		 var tit=postTitle[postTitle.length-2].replace(/\.title$/ig,'');
+		var pid=posts[i].pid;
+		if(pidToName[pid])pid=pidToName[pid];
 		
-		 var aLink='<a href="./?p='+posts[i].pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit.replace(/^\d+@/,'')+'</a>'
+		 var aLink='<a href="./?p='+pid+'" title="'+posts[i].updatetime+'" data-pid="'+posts[i].pid+'" data-url="'+posts[i].url+'">'+tit.replace(/^\d+@/,'').replace(/^#\{.*?\}#/,'')+'</a>'
 		// htmlArr.push('<li class="">'+aLink+'</li>');
 	
 		if(recentNum++<30)getMenu(['最近更新','<!--'+(100000+i)+'排序--><small>'+posts[i].updatetime.split(' ')[0]+'</small> '+aLink],0,menuJn);

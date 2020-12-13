@@ -128,7 +128,7 @@ var testCanvas = function (hz) {
     var rad = {};
     if (hz.radStrokes) {
         for (var i of hz.radStrokes) {
-            console.log(i);
+            
             rad[i] = 1;
         }
     }
@@ -200,7 +200,7 @@ var testCanvas = function (hz) {
         if (x1) {
             a = x2 - x1,
             b = y2 - y1;
-            _k = b / a;
+            //_k = b / a;
             dist = Math.sqrt(a * a + b * b);
             min = dist / 3;
 
@@ -246,29 +246,22 @@ var testCanvas = function (hz) {
             count = 0;
 			ctx.beginPath();
         } else {
-            if (flag === 1) {
-              //ctx.moveTo(k[0],k[1]);               
-            }			
-			//ctx.lineTo(k[0],k[1]);
-			//ctx.lineWidth = 2;
-           
-           drawCurve(k[0], k[1]);
-            ctx.stroke();
+			if (flag === 1) {
+			//ctx.moveTo(k[0],k[1]);               
+			}			
+			//ctx.lineTo(k[0],k[1]);           
+			drawCurve(k[0], k[1]);
+			ctx.stroke();
         }
         flag = 0;
 
     }, function () {
       //  strokeHanzi(arr1[lastNum], N, ctx, 'gray', 'green');
         timer1 = setTimeout(function () {
-
             testCanvas(hz);
         }, 5000);
     }, 140 - _('#range').val());
-    var arr = hz.medians;
-
-    max_x += tmp_max_x;
-    //console.log(tmp_max_x);
-
+   // max_x += tmp_max_x;
 }
 
 function randomColor() {
@@ -281,7 +274,6 @@ function randomColor() {
 function getCTX() {
 
     //alert(contentCtn.height());
-
     cvs.width = contentCtn.width();
     cvs.height = cvs.width;
     let ctx = cvs.getContext("2d");
@@ -317,7 +309,7 @@ function drawCurve(mousex, mousey, cls) {
 
     points.slice(0, 1);
     //ctx.stroke();
-
+	
 
 }
 

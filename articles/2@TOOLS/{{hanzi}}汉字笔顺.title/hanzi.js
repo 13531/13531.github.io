@@ -258,7 +258,7 @@ var testCanvas = function (hz) {
         flag = 0;
 
     }, function () {
-        strokeHanzi(arr1[lastNum], N, ctx, 'gray', 'green');
+      //  strokeHanzi(arr1[lastNum], N, ctx, 'gray', 'green');
         timer1 = setTimeout(function () {
 
             testCanvas(hz);

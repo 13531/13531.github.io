@@ -275,7 +275,7 @@ function randomColor() {
 function getCTX() {
 
     //alert(contentCtn.height());
-    cvs.width = contentCtn.width();
+    cvs.width = contentCtn.width()-30;
     cvs.height = cvs.width;
     let ctx = cvs.getContext("2d");
     ctx.clearRect(0, 0, cvs.width, cvs.height);

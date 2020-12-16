@@ -10,7 +10,7 @@ var wsConsole={
 	reconnectInterval:1000,
 	//尝试X次后 弹出提示
 	reconnectTimes:5,
-	webSocketUrl:'ws://192.168.2.101:3000/',
+	webSocketUrl:'ws://192.168.2.90:3000/',
 	send:function(e){},
 	//建立连接前保存log数据
 	saveLog : [],

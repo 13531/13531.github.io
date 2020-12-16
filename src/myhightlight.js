@@ -172,7 +172,7 @@ function hightlight(o){
 	timerEach(arr,0,arr.length-1,
 	function(){	
 		console.log(resHtml.length);
-		_(o).html(resHtml).vShow();
+		_(o).html(resHtml.replace(/\>$/,'style="display:none" >')+'<button class="copy" >复制</button>').vShow();
 		console.log('长度',o.textContent.length,orginalCode.length);
 		//o.innerHTML=resHtml;
 		console.timeEnd('my_hljs');
@@ -186,6 +186,11 @@ function hightlight(o){
 				_(p.node.firstChild).css({'background':'darkgreen'});
 				_(p.node.lastChild).css({'background':'darkgreen'});
 			})
+			.on('click',{'class':'copy'},function(){
+				var t=orginalCode.replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&");
+				_.execCopy(t);
+			
+			});
 		
 		
 		

@@ -236,7 +236,7 @@ function createSocket(){
 		
 
 		
-		document.getElementById('sendScript').onclick=function(){
+	/*	document.getElementById('sendScript').onclick=function(){
 			
 			wsConsole.sendScript(document.getElementById('wsConsoleScript').value);
 			
@@ -249,7 +249,7 @@ function createSocket(){
 		}
 		document.getElementById('wsConsoleCss').onkeyup=function(){
 			wsConsole.sendCss(document.getElementById('wsConsoleCss').value);
-		}
+		}*/
 	}
 	reconnectFunc=function(){
 		if(!wsConsole.autoReconnect)return;

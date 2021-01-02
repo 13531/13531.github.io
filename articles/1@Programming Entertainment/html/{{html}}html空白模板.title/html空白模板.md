@@ -3,8 +3,7 @@
 
 [参考手册](https://www.w3school.com.cn/r.asp)
 <pre>
-<code>
-<!DOCTYPE html>  
+<code><!DOCTYPE html>  
 <html>  
 <head>
 <title>标题</title>  
@@ -35,15 +34,15 @@ Element 	Description
 <style> 	用于内联 CSS。</code>
 </pre>
 
-<pre>
-<code>
+<pre class='pre'>
+<code class='code'>
 Element 	Description
 <script> 	定义一个内联脚本或链接到外部脚本。脚本语言是 JavaScript。
 <noscript> 	定义当浏览器不支持脚本时显示的替代文字。
 <template>这个元素在 HTML5 中加入 	通过 JavaScript 在运行时实例化内容的容器。</code>
 </pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <body> 	代表 HTML 文档的内容。在文档中只能有一个 <body> 元素。
 <section> 这个元素在 HTML5 中加入 	定义文档中的一个章节。
@@ -57,11 +56,11 @@ Element 	Description
 <main>这个元素在 HTML5 中加入 	定义文档中主要或重要的内容。</code>
 </pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <p> 	定义一个段落。
 <hr> 	代表章节、文章或其他长内容中段落之间的分隔符。
-<pre> 	代表其内容已经预先排版过，格式应当保留 。
+<pre class='pre'> 	代表其内容已经预先排版过，格式应当保留 。
 <blockquote> 	代表引用自其他来源的内容。
 <ol> 	定义一个有序列表。
 <ul> 	定义一个无序列表。
@@ -73,7 +72,7 @@ Element 	Description
 <figcaption> 这个元素在 HTML5 中加入 	代表一个图例的说明。
 <div> 	代表一个通用的容器，没有特殊含义。</code></pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <a> 	代表一个链接到其他资源的超链接 。
 <em> 	代表强调 文字。
@@ -86,7 +85,7 @@ Element 	Description
 <abbr> 	代表省略 或缩写 ，其完整内容在 title 属性中。
 <data> 这个元素在 HTML5 中加入 	关联一个内容的机器可读的等价形式 （该元素只在 WHATWG 版本的 HTML 标准中，不在 W3C 版本的 HTML5 标准中）。
 <time> 这个元素在 HTML5 中加入 	代表日期 和时间 值；机器可读的等价形式通过 datetime 属性指定。
-<code> 	代表计算机代码 。
+<code class='code'> 	代表计算机代码 。
 <var> 	代表代码中的变量 。
 <samp> 	代表程序或电脑的输出 。
 <kbd> 	代表用户输入 ，一般从键盘输出，但也可以代表其他输入，如语音输入。
@@ -104,12 +103,12 @@ Element 	Description
 <br> 	代表换行 。
 <wbr> 这个元素在 HTML5 中加入 	代表建议换行 (Word Break Opportunity) ，当文本太长需要换行时将会在此处添加换行符。</code></pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <ins> 	定义增加 到文档的内容。
 <del> 	定义从文档移除 的内容</code></pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <img> 	代表一张图片 。
 <iframe> 	代表一个内联的框架 。
@@ -126,7 +125,7 @@ Element 	Description
 <svg> 这个元素在 HTML5 中加入 	定义一个嵌入式矢量图 。
 <math> 这个元素在 HTML5 中加入 	定义一段数学公式 。</code></pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <table> 	定义多维数据 。
 <caption> 	代表表格的标题 。
@@ -139,7 +138,7 @@ Element 	Description
 <td> 	代表表格中的单元格 。
 <th> 	代表表格中的头部单元格 。</code></pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <form> 	代表一个表单 ，由控件组成。
 <fieldset> 	代表控件组 。
@@ -157,7 +156,7 @@ Element 	Description
 <progress> 这个元素在 HTML5 中加入 	代表进度条 。
 <meter> 这个元素在 HTML5 中加入 	代表滑动条 </code></pre>
 
-<pre><code>
+<pre class='pre'><code class='code'>
 Element 	Description
 <details> 这个元素在 HTML5 中加入 	代表一个用户可以(点击)获取额外信息或控件的小部件 。
 <summary> 这个元素在 HTML5 中加入 	代表 <details> 元素的综述 或标题 。

@@ -255,7 +255,7 @@ function createSocket(){
 		if(!wsConsole.autoReconnect)return;
 		
 		if(wsConsole.reconnectCount===0){
-			alert('连接已断开. 关闭提示后重新连接');
+			alert(wsConsole.webSocketUrl+'连接已断开. 关闭提示后重新连接');
 			createSocket();
 		}
 		clearTimeout(timer);
@@ -263,7 +263,7 @@ function createSocket(){
 			oldLog && oldLog('reconnecting... <' + wsConsole.reconnectCount + '>' );		
 			if(wsConsole.reconnectCount>wsConsole.reconnectTimes){
 				
-				alert('无法连接服务器. 关闭提示后继续尝试连接');
+				alert('无法连接服务器'+wsConsole.webSocketUrl+'. 关闭提示后继续尝试连接');
 				wsConsole.reconnectCount=0;
 			}
 			createSocket();

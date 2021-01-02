@@ -27,4 +27,4 @@ background-color:rgb(210,210,210,.6)
 
 <canvas  id='canvas' width=600 height=600></canvas>
 
-<script nocache=true src='hanzi.js'></script>
+<script nocache=true _src='hanzi.js'></script>

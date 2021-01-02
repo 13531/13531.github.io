@@ -56,23 +56,25 @@ var colorNames='LightGoldenRodYellow|MediumSpringGreen|MediumAquaMarine|MediumSl
 var colorNamesArr=colorNames.split(/\|/);
 for(var i in colorNamesArr){	
 	var p=colorNamesArr[i].toLowerCase();
+	
 	var r='<span class="edit-color" style="background-color:'+p+'">';
+
 	ck.set(p,r);
+	
+	
 }
 
 function getColorMap(x){
-	var n=x.toLowerCase();
+	var n=x.toLowerCase();	
 	if(ck.has(n)){	
 		return ck.get(n)+x+'</span>';
 	}else{
 		return x;
-	}
-	
-	
+	}	
 }
 
 var colorCode=function(p){	
-	return '<span class="edit-color" style="background-color:'+arguments[0]+'">'+arguments[0]+'</span>'
+	return '<span class="edit-color" style="background-color:'+arguments[0]+'">'+arguments[0]+'</span>';
 }
 var colorName=function(p,p1,p2){
 	return arguments[1]+getColorMap(arguments[2]);
@@ -99,9 +101,13 @@ var re=/(([^a-z])([a-z]+))|(#([a-f0-9]{8}|[a-f0-9]{6}|[a-f0-9]{3}))|((rgb|hsl)(a
 //rgb(a)?(\s+)?\(((\s+)?\d+(%)?(\s)?\,){2}(\s+)?\d+(%)?(\s+)?(,(\s+)?[\d\.]+)?(\s+)?\)
 function addColor(code){
 //console.log(code);
+
 	code= code.replace(/#([a-f0-9]{8}|[a-f0-9]{6}|[a-f0-9]{3})/img,colorCode)
   .replace(/(rgb|hsl)(a)?\(((\s+)?\d+(%)?(\s)?\,){2}(\s+)?\d+(%)?(\s+)?(,(\s+)?(0|1|0\.\d+|\.\d+))?(\s+)?\)/img,colorCode)
   .replace(/([^a-z]|^)([a-z]+)/igm, colorName)
+	.replace(/代码|视窗|文档|取id元素|创建元素/ig,function(p){
+		return '<span class="keyword" style="background-color:hsla(278,100%,25%,0.97)">'+p+'</span>';
+	})
 	return code;
 }
 var xxbox=_.createBox();
@@ -162,7 +168,7 @@ edt.on('keyup','*',function(e){
 	boxCtn.show();
 	var boxW=boxCtn.width(),boxH=boxCtn.height();
 	boxCtn.hide();
-	_('#editor-view')._qAll('span').each(function(o){		
+	_('#editor-view')._qAll('.edit-color').each(function(o){		
 		var w=o.offsetWidth;
 		var h=o.offsetHeight;
 		//区域

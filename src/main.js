@@ -1,4 +1,5 @@
-
+(function(){
+'use strict';
 marked.setOptions({
   // 他是底层的东西，一般不改，比如 **我是粗体** 解析成<strong>我是粗体</strong>，如果你不满意就可以改变他的结构，比较麻烦。
   renderer: new marked.Renderer(), 	
@@ -36,6 +37,7 @@ var nameToUrl={};
 var pidToUrl={};
 var dataJn={};
 function loadPid(pid){
+	
 	//nameToPid 依赖articles-list.js
 	if(nameToPid[pid])pid=nameToPid[pid];
 
@@ -46,6 +48,7 @@ function loadPid(pid){
 	}else{
 	//不需要articles-list.js
 	_.get( './articles/pid/'+pid+'.pid.json?t='+Math.random(),function(r){
+		
 		if(r.url){
 			var url=r.url.urlEncode();
 		
@@ -53,20 +56,27 @@ function loadPid(pid){
 		}else{
 			_('#contentCtn').html('<h4>该文章不存在</h4>');
 		}
+	},null,
+	function(){
+		_('#contentCtn').html('<h4>该文章不存在</h4>');
 	});
 	}
 	
 }
 function loadContent(url,_r){	
+
 	_.get( url+'?t=a'+Math.random(),function(r){	
+	
 		var f=_r.url.split('/');	
 		var t=f[f.length-2].replace(/\.title.*?$/,'').replace(/^\d+@/,'').replace(/^\{\{.*?\}\}/,'');
 		var title='<h2>'+t+'</h2><hr>';
-		document.title=t;		
-		r=title+marked(r)+ '<hr><small>文档创建: '+fillZero(_r.createtime)+'<br />最后编辑: '+fillZero(_r.updatetime)+'</small>';	
+		document.title=t;
 		r=r.replace(/(<code[^>]*>)([\s\S]*?)(<\/code>)/ig,function(p,p1,p2,p3){	
-			return p1+p2.replace(/</g,"&lt;").replace(/>/g,"&gt;")+p3;
-		});
+				return p1+p2.replace(/</g,"&lt;").replace(/>/g,"&gt;")+p3;
+			});
+		
+		r=title+marked(r)+ '<hr><small>文档创建: '+fillZero(_r.createtime)+'<br />最后编辑: '+fillZero(_r.updatetime)+'</small>';	
+		
 		var hasCode=false;
 		var scriptArr=[];
 		var contentCtn=_('#contentCtn').html(r)._qAll('link').each(function(o){
@@ -98,7 +108,7 @@ function loadContent(url,_r){
 			//_(o.outerHTML).ap(_('body'),'<]>')
 			
 			
-		})._qAll('code').each(function(o){
+		})._qAll('.code').each(function(o){
 			hasCode=true;
 			_(o).addClass('sh_sourcecode').vHide();					
 					
@@ -107,18 +117,29 @@ function loadContent(url,_r){
 		_.loadJsArr(scriptArr,function(){});
 		
 		if(hasCode){
-		_.loadJsArr(['./src/myhightlight.js'],function(){			
-				contentCtn._qAll('code').each(function(o){
-					hightlight(o);
-					
-				});
-			});			
+			/*contentCtn._qAll('code').each(function(o){
+					//hightlight(o);
+					var str=o.innerHTML;
+					//str=sh_highlightString(str,'javascript');
+					o.innerHTML=str;
+					_(o).vShow();
+					//sh_highlightDocument();
+					//sh_highlightElement(o, 'javascript');
+				});*/
+		_.loadCss('./src/myhl_javascript.css',function(){
+			
+			_.loadJsArr(['./src/myhightlight.js'],function(){
+				
+					contentCtn._qAll('.code').each(function(o){
+			o.innerHTML=o.innerHTML.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+						hightlight(o);
+						
+					});
+				});	
+		});			
 			
 		}		
-	},function(err){
-		_('#contentCtn').html('获取数据失败!');
-		
-	});
+	}	);
 		
 }
 function fillZero(t){	
@@ -265,6 +286,8 @@ function showList(e){
 	_(c.nodes[c.nodes.length-1]).show();
 
 	}
+	_('#unfold').show();
+	_('#fold').hide();
 }
 showList(articles_list);
 
@@ -276,6 +299,13 @@ _('#menu').on('click',{'data-menu-id':null},function(e){
 });
 _('#unfold').on('click',function(){
 	_('.menu-child').show();
+	_('#unfold').changeDisplay();
+	_('#fold').changeDisplay();
+});
+_('#fold').on('click',function(){
+	_('#unfold').changeDisplay();
+	_('#fold').changeDisplay();
+	_('#menuContainer').qAll('.menu-child').hide();
 });
 
 var debug=_.localGet('debug');
@@ -288,3 +318,5 @@ if(debug==='1'){
 	}
 	);
 }
+
+})();

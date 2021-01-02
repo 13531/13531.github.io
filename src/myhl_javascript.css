@@ -6,46 +6,46 @@ background: #002b36;
 color: #839496;
 }
 
-.sh_keyword { color: #6770f9; font-weight: bold; }           /* language keywords */
+.sh_keyword { color: #6770f9; /*font-weight: bold;*/ }           /* language keywords */
 .sh_type { color: #86624d; }                            /* basic types */
 .sh_usertype { color: teal; }                             /* user defined types */
 .sh_string { color:#f25a77; font-family: monospace; }        /* strings and chars */
 .sh_regexp { color: #f25a77; font-family: monospace; }     /* regular expressions */
 .sh_specialchar { color:#c6939c; font-family: monospace; }  /* e.g., \n, \t, \\ */
-.sh_comment { color: gray; font-style: italic; }         /* comments */
+.sh_comment { color: gray; /*font-style: italic;*/ }         /* comments */
 .sh_number { color: #df1155; }                             /* literal numbers */
-.sh_preproc { color: #bc4ac6; font-weight: bold; }       /* e.g., #include, import */
+.sh_preproc { color: #bc4ac6; /*font-weight: bold;*/ }       /* e.g., #include, import */
 .sh_symbol { color: #a8a8a8; }                            /* e.g., <, >, + */
-.sh_function { color: #a6a60f; font-weight: bold; }         /* function calls and declarations */
+.sh_function { color: #a6a60f; /*font-weight: bold;*/ }         /* function calls and declarations */
 .sh_cbracket { color: #aeaeae; }                              /* block brackets (e.g., {, }) */
-.sh_todo { font-weight: bold; background-color: cyan; }   /* TODO and FIXME */
+.sh_todo { /*font-weight: bold;*/ background-color: cyan; }   /* TODO and FIXME */
 
 /* Predefined variables and functions (for instance glsl) */
 .sh_predef_var { color: #ce4712; }
-.sh_predef_func { color: #a6a60f; font-weight: bold; }
+.sh_predef_func { color: #a6a60f; /*font-weight: bold;*/ }
 
 /* for OOP */
 .sh_classname { color: teal; }
 
 /* line numbers (not yet implemented) */
-.sh_linenum { color: #000; font-family: monospace; }
+.sh_linenum { color: #000; /*font-family: monospace;*/ }
 
 /* Internet related */
-.sh_url { color: #788cd9; text-decoration: underline; font-family: monospace; }
+.sh_url { color: #788cd9; text-decoration: underline; /*font-family: monospace;*/ }
 
 /* for ChangeLog and Log files */
 .sh_date { color: blue; font-weight: bold; }
-.sh_time, .sh_file { color: darkblue; font-weight: bold; }
+.sh_time, .sh_file { color: darkblue; /*font-weight: bold;*/ }
 .sh_ip, .sh_name { color: darkgreen; }
 
 /* for Prolog, Perl... */
 .sh_variable { color: darkgreen; }
 
 /* for LaTeX */
-.sh_italics { color: darkgreen; font-style: italic; }
-.sh_bold { color: darkgreen; font-weight: bold; }
+.sh_italics { color: darkgreen; /*font-style: italic;*/ }
+.sh_bold { color: darkgreen; /*font-weight: bold;*/ }
 .sh_underline { color: darkgreen; text-decoration: underline; }
-.sh_fixed { color: green; font-family: monospace; }
+.sh_fixed { color: green; /*font-family: monospace;*/ }
 .sh_argument { color: darkgreen; }
 .sh_optionalargument { color: purple; }
 .sh_math { color: orange; }
@@ -59,9 +59,9 @@ color: #839496;
 /* for css */
 .sh_selector { color: purple; }
 .sh_property { color: blue; }
-.sh_value { color: darkgreen; font-style: italic; }
+.sh_value { color: darkgreen; /*font-style: italic; */}
 
 /* other */
-.sh_section { color: black; font-weight: bold; }
+.sh_section { color: black; /* font-weight: bold; */ }
 .sh_paren { color: red; }
 .sh_attribute { color: darkgreen; }

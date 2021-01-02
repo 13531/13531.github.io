@@ -133,8 +133,9 @@ var testCanvas = function (hz) {
             rad[hz.radStrokes[i]] = 1;
         }
     }
+	//没有部首数据
     if (JSON.stringify(rad) === '{}') {
-        rad[0] = 1;
+       // rad[0] = 1;
     }
     //這是SVG
     for (var i = 0; i < arr1.length; i++) {
@@ -238,10 +239,10 @@ var testCanvas = function (hz) {
             lastNum = c;
             flag = 1;
             ctx.lineCap = 'round';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1.5;
             ctx.strokeStyle = strokeColor;           
 			 ctx.lineJoin = ctx.lineCap = 'round';
-            ctx.shadowBlur = ctx.lineWidth+3;
+            ctx.shadowBlur = ctx.lineWidth+1;
             ctx.shadowColor = shadowColor;
             points.length = 0;
             count = 0;
@@ -308,7 +309,8 @@ function drawCurve(mousex, mousey, cls) {
         ctx.quadraticCurveTo(points[points.length - 2].x, points[points.length - 2].y, x, y);
     }
 
-    points.slice(0, 1);
+    //points.slice(0, 1);
+	if(points.length>3)points.shift();
     //ctx.stroke();
 	
 

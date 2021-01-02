@@ -1,16 +1,18 @@
-function hightlight(o){
+function hightlight(o,noLineNumber){
 	//o.style.display='none';
-	console.time('my_hljs')
+	//console.time('my_hljs')
 	var code=o.innerHTML;
 	var orginalCode=code;
+	
+	code=code.replace(/</g,"&lt;").replace(/>/g,"&gt;");
 	//o.innerHTML='';
 	//.replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&").replace(/^\n|^\r/,"");=
 	//o.innerHTML=code.innerHTML.replace(/^\n|^\r/,"");
-	var title=document.title;
+	//var title=document.title;
 	var textValue={};
 	var replaceValue={};
 	var mark="𪚥";
-	var idNum=0;
+	var idNum=1;
 	var timer;
 	var lineNum=0;
 	var _arr=[];	
@@ -24,10 +26,16 @@ function hightlight(o){
 		return id;
 	}
 	var restore=function(p){
+		
 		var res=replaceValue[p];
-		if(/𪚥\d+§/.test(res)){
-			res=restore(res);
+		while(/𪚥\d+§/.test(res)){
+			console.log(res);
+			res=res.replace(/𪚥\d+§/g,function(g){						
+			
+				return restore(g);
+			});		
 		}
+		
 		return res;
 	}
 	var textRestore=function(p){
@@ -38,8 +46,9 @@ function hightlight(o){
 			})
 	}
 	var addLineNum=function(val){		
-		return val.replace(/\n/g,function(p){
+		return val.replace(/.*?\n/g,function(p){
 			lineNum++;
+			if(noLineNumber)return '<ul class="code-line" id="line-'+lineNum+'" />'+p+'</ul>';
 			return p+'<input type="button" value="'+lineNum+'" />';
 		});
 	}
@@ -69,23 +78,30 @@ function hightlight(o){
 	var timerEach=function(arr,n,len,func){	
 		
 			
-		arr[n]=arr[n]		
+		arr[n]=arr[n].replace(/<br><\/div>|<br>|<\/div>/igm,'\n')	
+	.replace(/<div>|<\/div>|<br>|<br \/>|<br\/>/igm ,function(p){
+		return saveReplace(p,p);	
+	})		//bug:'"'"'
 		.replace(/"(\\"|.?)+?"/g,function(p){
 			//双引号
+			
 			return saveReplace(p,'<span class="sh_string">'+p+'</span>');
 		})
 		.replace(/'(\\'|.?)+?'/g,function(p){
 			//单引号
+			
 			return saveReplace(p,'<span class="sh_string">'+p+'</span>');
 		})		
-		.replace(/(^|[^"'\\:])\/\/.+[\n|\r]/gm,function(p,p1,p2){		
-		//.replace(/\/\*[\s\S]*?\*\/|([^:"'=]|^)\/\/.*$/mg,function(p,p1,p2){
+		//.replace(/(^|[^"'\\:])\/\/.+(\n|\r)/gm,function(p,p1,p2){		
+		//.replace(/\/\*[\s\S]*?\*\/|([^:"'=]|^)\/\/.+(\n|\r)/mg,function(p,p1,p2){//问题
 			//单行注释	
 			//  /^\.\//,<br>  http://123  <br> "123//123" <br>'123//123' <br>
 			//恢复引号
-			return saveReplace(p,'<span  class="sh_comment">'+textRestore(p)+'</span>');	
+			//console.log(p);
+			//return saveReplace(p,textRestore(p));
+		//	return saveReplace(p,'<span  class="sh_comment">'+textRestore(p)+'</span>');	
 			
-		})	
+		//})	
 		.replace(/\/(\\\/|.)+\/[img]*/g,function(p){
 		//.replace(/\/(?:\\.|[^*\\\/])(?:\\.|[^\\\/])+\//g,function(p){//问题			
 			return saveReplace(p,'<span class="sh_regexp">'+textRestore(p)+'</span>');	
@@ -114,8 +130,8 @@ function hightlight(o){
 	  return saveReplace(p,'<span class="sh_predef_var">'+p+'</span>');
 		 })
 		//.replace(/~|!|%|\^|\*|\(|\)|-|\+|=|\[|\]|\\|:|;|,|\.|\/|\?|&|<|>|\|/g
-		
-	.replace(/~|!|%|\^|\*|\(|\)|-|\+|=|\[|\]|\\|\.|\/|\?|\||;|<|>|,|:|&amp;|&lt;|&gt;/g //|&|:|
+	
+	.replace(/~|!|%|\^|\*|\(|\)|-|\+|=|\[|\]|\\|\.|\/|\?|\||;|,|:|&amp;|&lt;|&gt;/g //|&|:|  |&lt;|&gt;|<|>
       ,function(p){
 			return saveReplace(p,'<span class="sh_symbol">'+p+'</span>');	
 		})
@@ -156,7 +172,7 @@ function hightlight(o){
 		
 		if(timer)clearTimeout(timer);				
 		timer=setTimeout(function(){
-			document.title=n+'_'+len;			
+				
 			if(n<len)timerEach(arr,++n,len,func);
 			else {				
 				func();	
@@ -171,12 +187,13 @@ function hightlight(o){
 				
 	timerEach(arr,0,arr.length-1,
 	function(){	
-		console.log(resHtml.length);
-		_(o).html(resHtml.replace(/\>$/,'style="display:none" >')+'<button class="copy" >复制</button>').vShow();
-		console.log('长度',o.textContent.length,orginalCode.length);
+		//console.log(resHtml.length);
+		if(noLineNumber)_(o).html(resHtml.replace(/\>$/,'style="display:none" >')).vShow();
+		else _(o).html(resHtml.replace(/\>$/,'style="display:none" >')+'<button class="copy" >复制</button>').vShow();
+		//console.log('长度',o.textContent.length,orginalCode.length);
 		//o.innerHTML=resHtml;
-		console.timeEnd('my_hljs');
-		_(o).on('mouseover',{'class':'sh_cbracket'},function(e){
+	//	console.timeEnd('my_hljs');
+		/*_(o).on('mouseover',{'class':'sh_cbracket'},function(e){
 				var n=_(e.target);
 				var p=_(e.target).parent();
 				n.once('mouseout',function(){
@@ -190,12 +207,12 @@ function hightlight(o){
 				var t=orginalCode.replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&");
 				_.execCopy(t);
 			
-			});
+			});*/
 		
 		
 		
 		
-			document.title=title;
+		//	document.title=title;
 		}
 	);		
 	

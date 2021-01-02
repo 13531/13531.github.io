@@ -23,4 +23,4 @@ padding:5px;
 <textarea  spellcheck='false' id='output'>
 </textarea>
 
-<script nocache='true'src='test_aes.js' ></script>
+<script nocache='true' _src='test_aes.js' ></script>

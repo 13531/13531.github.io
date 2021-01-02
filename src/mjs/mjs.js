@@ -118,13 +118,15 @@ xx.findPos=function(obj) {
 }
 
 //苹果手机 url只能用相对地址
-xx.get=function(url, _callback,data){
+xx.get=function(url, _callback,data,errorFunc){
 	xx.ajax({
      url:url,
      type:'get',
      data:data,
-	callback:_callback
+	callback:_callback,
+	error:errorFunc||function(e){}
 	});
+
 }
 
 //苹果手机 url只能用相对地址
@@ -210,7 +212,11 @@ xx.ajax=function(option){
                       option.callback(xhr.responseText);
 					 
                  }
-             }
+             }else {
+				  xhr.onerror(xhr);
+			 }
+				
+			
 			 
 			   
        }
@@ -338,9 +344,41 @@ xx.loadJs=function(url, callback) {
         }
     }
     script.src = url;
-    document.body.appendChild(script);
+   document.getElementsByTagName('head')[0].appendChild(script);
 }
-
+xx.loadCss=function(url, callback) {
+    var d = document.createElement('link');
+   d.setAttribute("type", "text/css");
+   d.setAttribute("rel", "stylesheet");
+    if (typeof(callback) != "undefined") {
+        if (d.readyState) {
+            d.onreadystatechange = function () {
+                if (d.readyState == "loaded" || d.readyState == "complete") {
+                    d.onreadystatechange = null;
+                    callback();
+                }
+            }
+        } else {
+            d.onload = function () {
+                callback();
+            }
+        }
+    }
+    d.href = url;
+   document.getElementsByTagName('head')[0].appendChild(d);
+}
+xx.loadCssArr=function(cssArr,callback){
+	if(cssArr[0]&&cssArr[0].length>0){
+	
+	xx.loadCss(cssArr[0],function(){
+		xx.loadCssArr(cssArr,callback);
+		
+	})
+	cssArr.shift();
+	}else{
+		callback();
+	}
+}
 xx.loadJsArr=function(jsArr,callback){
 	if(jsArr[0]&&jsArr[0].length>0){
 	
@@ -352,6 +390,11 @@ xx.loadJsArr=function(jsArr,callback){
 	}else{
 		callback();
 	}
+}
+xx.loadJsCss=function(jsArr,cssArr,callback){
+	xx.loadCssArr(cssArr,function(){
+		xx.loadJsArr(jsArr,callback);		
+	});
 }
 
 xx.timerEach = function (arr, n, callback, finishFunc,t) {
@@ -488,7 +531,7 @@ xx.prototype = {
             setTimeout(function () {
                 xx._each(ts, function (o) {
                     o.parentNode.removeChild(o);
-                    console.log(o);
+               
                     ts = null;
                 });
             }, time);
@@ -648,7 +691,7 @@ xx.prototype = {
 		if(type.indexOf('.')===0){
 			for(var i in this.node.offEvents){
 				if((i+'.').indexOf((type+'.'))>0){
-					console.log('off:清除',type,'命名的',i);
+					//console.log('off:清除',type,'命名的',i);
 					this.node.offEvents[type]();
 				}	
 			}	
@@ -656,7 +699,7 @@ xx.prototype = {
 		//根据绑定事件解除绑定
 			for(var i in this.node.offEvents){
 				if((i+'.').indexOf((type+'.'))===0){
-				console.log('清除:',i);
+				//console.log('清除:',i);
 				this.node.offEvents[type]();
 				}
 			}
@@ -681,7 +724,7 @@ xx.prototype = {
 		//console.log('exeOn:',this.node.events[type]);	
 		
 		//var handler=this.node.events[type];	
-		console.log('模拟:',type);
+		//console.log('模拟:',type);
 		if(!this.node.events[type]){	
 			return this;
 		}		
@@ -697,15 +740,17 @@ xx.prototype = {
     @fn {funtion}
      */
 	 ,on:function(type, arg, handler){
-			 console.log(type);
-			 
-		 if(typeof arg==='undefined'){
-			 this.exeOn(type);
-		 }else{		 
-			 this.each(function(o){
-				 xx(o)._on(type, arg, handler);
-			 });
-		 }
+			 //console.log(type);
+		var typeArr=type.split(/\s+/); 
+		for(var i in typeArr){
+			 if(typeof arg==='undefined'){
+				 this.exeOn(typeArr[i]);
+			 }else{		 
+				 this.each(function(o){
+					 xx(o)._on(typeArr[i], arg, handler);
+				 });
+			 }
+		}
 		 return this;
 	 }
 	,_on: function (type, arg, handler) { 
@@ -757,6 +802,21 @@ xx.prototype = {
 		}
 		return this;
     }
+	,
+	drag:function(callback){
+		var flag=0;
+
+		this.on('mousemove.drag touchmove.drag',function(e){
+		
+		if(flag===0)return;
+			callback(e,this);
+		}).on('mousedown.drag  touchstart.drag',function(){
+			flag=1;			
+		}).on('mouseup.drag mouseout.drag mouseleave.drag',function(){
+			flag=0;
+		});
+		return this;
+	}
 	,findPos:function(){
 		return xx.findPos(this.node);
 	}

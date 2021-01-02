@@ -63,6 +63,8 @@ dim ipos
 dim pid
 dim filePath
 dim linkName
+dim enPid
+dim enPidFilePath
 dim pidLogFile
 dim pidStr
 For Each oFile In oFiles
@@ -73,8 +75,8 @@ IF StrComp(LCase(oFso.GetExtensionName(oFile)),"md")=0 Then
 	
 
 	linkName=splitGetLast(pathRemove,"\",1)
-	
-	
+	 enPid=getStrBetween(linkName,"{{","}}")
+	 
 	pid=hasPid(pathRemove)
 	filePath=pathRemove & pid & ".pid"
 	oFSO.DeleteFile filePath
@@ -93,7 +95,7 @@ IF StrComp(LCase(oFso.GetExtensionName(oFile)),"md")=0 Then
 		WriteToFile pidLogFile,pid
 	end if
 	filePath=pathRemove & pid & ".pid"
-	
+	if len(enPid)>0 then enPidFilePath=pathRemove & enPid & ".pid"
 	
 	'pid 检查是否重复
 	if InStrRev(all_pid, ","& pid & ",")>0 then 		
@@ -124,12 +126,18 @@ IF StrComp(LCase(oFso.GetExtensionName(oFile)),"md")=0 Then
 	Set objFile=oFso.GetFile(ofile.path)
 	
 	WriteToFile filePath,"{""createtime"":""" & objFile.DateCreated & """,""updatetime"":""" & objFile.DateLastModified & """,""url"":"""&RP(Replace(ofile.path,pathRemove,""),"\\","/")&"""}"
-	
+	'articles-list
 	aa=aa & Replace(ofile.path,cd,"") & "|"
 	aa=aa & pid & "|"	
 	aa=aa & objFile.DateLastModified & "|" & objFile.DateCreated &"|"
 	
-	ws.run "cmd /c copy /y """ & filePath & """ """ & filePath & ".json""&&move /y  """& filePath & ".json"" " & " pid>nul" , vbhide		
+	ws.run "cmd /c copy /y """ & filePath & """ """ & filePath & ".json""&&move /y  """& filePath & ".json"" " & " pid>nul" , vbhide	
+	
+	if len(enPid)>0 then 
+		
+		ws.run "cmd /c copy /y """ & filePath & """ """ & enPidFilePath & ".json""&&move /y  """& enPidFilePath & ".json"" " & " pid>nul" , vbhide	
+	end if
+	
 end if	
 Next
 For Each oSubFolder In oSubFolders
@@ -227,5 +235,20 @@ for each i in arr
 	end if
 next 
 
+end function
+'获取字符串之间
+
+
+function getStrBetween(Str,StartStr,EndStr)
+strarr=split(Str,EndStr)
+lens1= ubound(strarr)
+
+x = strarr(0)
+strarr=split(x,StartStr)
+lens2= ubound(strarr)
+'获取数组的长度
+x= strarr(lens2)
+getStrBetween=x
+if lens1*lens2=0 then getStrBetween=""
 end function
 

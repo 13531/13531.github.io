@@ -311,6 +311,7 @@ xx.pasteTextOnly=function(o,func){
 			if(func)func();
 	});
 }
+
 xx.execCopy=function(text) {
 	try {
 	  var input = document.createElement('textarea');
@@ -396,7 +397,7 @@ xx.loadJsCss=function(jsArr,cssArr,callback){
 		xx.loadJsArr(jsArr,callback);		
 	});
 }
-
+// (arr 数组, n 0, callback 回调函数 , finishFunc 完成 , t 时间)
 xx.timerEach = function (arr, n, callback, finishFunc,t) {
 	if(n==0&&typeof t==='number')xx.timerEachDelay=t;   
     xx.timer=setTimeout(function () {
@@ -493,7 +494,7 @@ xx.prototype = {
             this.node.innerHTML = fn(this.node.innerHTML);
             return this;
         } else if (d == 'get' && typeof fn === 'function') {
-            return d(this.node.innerHTML);
+            return fn(this.node.innerHTML);
         } else
             return this.node.innerHTML;
 

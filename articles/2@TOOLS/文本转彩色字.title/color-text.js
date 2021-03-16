@@ -122,15 +122,16 @@ draw({
 });
 */
 document.getElementById('submit').onclick= btnDraw;
-document.getElementById('range').onmouseup= btnDraw
-document.getElementById('range2').onmouseup=  btnDraw
+_('#range').drag(btnDraw);
+_('#range2').drag(btnDraw);
+
 function btnDraw(){	
 draw({
 	text:document.getElementById('text').value,
 	size:parseInt(document.getElementById('range2').value),
 	color:'#000',
 	bgColor:'rgba(0,0,0,0)',
-	width:400,
+	width:365,
 	rotate:parseInt(document.getElementById('range').value)
 	});
 	console.log(this.value);

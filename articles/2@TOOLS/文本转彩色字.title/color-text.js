@@ -101,8 +101,8 @@ function draw(o,ctx,canvas){
 		var img=document.createElement('img');
 		img.src=canvas.toDataURL();
 		img.id='img-create';
-		img.className='BDE_Image';
-		document.body.appendChild(img);	
+		
+		document.getElementById('img-ctn').appendChild(img);	
 		console.timeEnd('计时1');
 		
 		
@@ -121,6 +121,7 @@ draw({
 	width:300
 });
 */
+btnDraw();
 document.getElementById('submit').onclick= btnDraw;
 _('#range').drag(btnDraw);
 _('#range2').drag(btnDraw);
@@ -136,11 +137,7 @@ draw({
 	});
 	console.log(this.value);
 }
-document.getElementById('showText').onclick=function(){
-	var imgs=document.querySelectorAll('.BDE_Image');
-	for(var i of imgs){
-	  i.style='border:1px solid blue'; 
-	  showPngText(i);
-	}
+document.getElementById('clearText').onclick=function(){
+	document.getElementById('text').value='';
 }
 })();

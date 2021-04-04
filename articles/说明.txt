@@ -8,3 +8,8 @@
 {{英文字符}} 可通过?/p=英文字符 的形式访问
 
 md 文件 ,首行 <!--template{null}--> 使用空白模板,不进行markdown格式化,内容插入到body
+
+<script _src >引用相对文件
+如何使用外部js资源
+
+<script _src >引用相对js文件 ,js文件内使用.loadJs () 加载外部js资源.
